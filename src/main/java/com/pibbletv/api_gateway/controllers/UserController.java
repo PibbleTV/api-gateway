@@ -1,10 +1,10 @@
 package com.pibbletv.api_gateway.controllers;
 
 import com.pibbletv.api_gateway.dtos.UserDTO;
-import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.Map;

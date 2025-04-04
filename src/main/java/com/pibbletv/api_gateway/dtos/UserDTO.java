@@ -4,10 +4,9 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-    private String uid;
+    private Long id;
     private String username;
-    private String bgPic;
-    private String profilePic;
-    private boolean isBanned;
-
+    private String bgImage;
+    private String profileImage;
+    private Boolean isBanned;
 }

@@ -5,7 +5,7 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
+import reactor.core.publisher.Mono;
 
 import java.util.Map;
 
@@ -13,41 +13,42 @@ import java.util.Map;
 @RequestMapping("/api-user")
 public class UserController {
 
-    private final RestTemplate restTemplate;
+    private final WebClient webClient;
 
-    public UserController(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public UserController(WebClient.Builder webClientBuilder) {
+        this.webClient = webClientBuilder.baseUrl("http://user-service").build();
     }
 
     @PostMapping(value = "/saveUser")
-    public ResponseEntity<Void> saveUser(@AuthenticationPrincipal Jwt jwt) {
+    public Mono<Void> saveUser(@AuthenticationPrincipal Jwt jwt) {
 
         String userId = jwt.getSubject();
         String username = jwt.getClaimAsString("preferred_username");
-
 
         Map<String, Object> data = Map.of(
                 "userId", userId,
                 "username", username
         );
 
+        String userServiceUrl = "/user/saveUser";
 
-        String userServiceUrl = "http://user-service/user/saveUser";
-
-        restTemplate.postForEntity(userServiceUrl, data, Void.class);
-
-        return ResponseEntity.ok().build();
+        return this.webClient.post()
+                .uri(userServiceUrl)
+                .bodyValue(data)
+                .retrieve()
+                .bodyToMono(Void.class);
     }
 
     @GetMapping("/getUserByToken")
-    public ResponseEntity<UserDTO> getUserByToken(@AuthenticationPrincipal Jwt jwt) {
+    public Mono<UserDTO> getUserByToken(@AuthenticationPrincipal Jwt jwt) {
 
         String userId = jwt.getSubject();
 
-        String userServiceUrl = "http://user-service/user/getUser?userId=" + userId;
+        String userServiceUrl = "/user/getUser?userId=" + userId;
 
-        UserDTO user = restTemplate.getForObject(userServiceUrl, UserDTO.class);
-
-        return ResponseEntity.ok(user);
+        return this.webClient.get()
+                .uri(userServiceUrl)
+                .retrieve()
+                .bodyToMono(UserDTO.class);
     }
 }

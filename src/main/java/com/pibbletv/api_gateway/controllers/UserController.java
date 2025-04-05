@@ -57,16 +57,7 @@ public class UserController {
     }
 
     @GetMapping("/getUserById")
-    public Mono<UserDTO> getUserById(@RequestParam String id, @AuthenticationPrincipal Jwt jwt) {
-        String requesterId = jwt.getSubject();
-
-        Map<String, Object> realmAccess = jwt.getClaim("realm_access");
-        List<String> roles = realmAccess != null ? (List<String>) realmAccess.get("roles") : Collections.emptyList();
-
-
-        if (!requesterId.equals(id) && !roles.contains("admin")) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
-        }
+    public Mono<UserDTO> getUserById(@RequestParam String id) {
 
         String userServiceUrl = "/user/getUserById?userId=" + id;
 
@@ -74,5 +65,24 @@ public class UserController {
                 .uri(userServiceUrl)
                 .retrieve()
                 .bodyToMono(UserDTO.class);
+    }
+
+    @PostMapping("/banUser")
+    public Mono<Void> banUser(@RequestParam String username, @AuthenticationPrincipal Jwt jwt) {
+
+        Map<String, Object> realmAccess = jwt.getClaim("realm_access");
+        List<String> roles = realmAccess != null ? (List<String>) realmAccess.get("roles") : Collections.emptyList();
+
+
+        if (!roles.contains("admin")) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Access denied");
+        }
+
+        String userServiceUrl = "/user/banUser?user=" + username;
+
+        return this.webClient.post()
+                .uri(userServiceUrl)
+                .retrieve()
+                .bodyToMono(Void.class);
     }
 }

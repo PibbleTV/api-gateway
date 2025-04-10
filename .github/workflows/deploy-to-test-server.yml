@@ -1,0 +1,51 @@
+name: Deploy to test server
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    name: Deploy docker-compose to test server
+    runs-on: ubuntu-latest
+
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Tailscale
+#        uses: tailscale/github-action@v3
+#        with:
+#          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+#
+#      - name: Setup SSH
+#        run: |
+#          install -m 600 -D /dev/null ~/.ssh/id_rsa
+#          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#          ssh-keyscan -T 30 -H 100.124.110.110 > ~/.ssh/known_hosts
+#
+#      - name: Down docker compose stack
+#        run: |
+#          ssh ${{ secrets.SSH_USER }}@100.124.110.110 "
+#              cd deploy && \
+#              if [ -f docker-compose.yml ]; then
+#                  echo '${{ secrets.SUDO_PASSWORD }}' | sudo -S docker compose down
+#              else
+#                  echo 'No docker-compose.yml file found, skipping.'
+#              fi
+#          "
+#
+#      - name: Clone full Github repository on server
+#        run: |
+#          ssh ${{ secrets.SSH_USER }}@100.124.110.110 "rm -rf deploy && git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/LazyTrader-Automated-Trading/atm-release.git deploy"
+#
+#      - name: Deploy docker-compose to server
+#        run: |
+#          ssh ${{ secrets.SSH_USER }}@100.124.110.110 "
+#            cd deploy && \
+#            mv .env.template .env && \
+#            rm docker-compose.yml && \
+#            mv docker-compose.test.yml docker-compose.yml && \
+#            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u stijnvdelsen -p ${{ secrets.PERSONAL_ACCESS_TOKEN }} && \
+#            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose pull && \
+#            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose up -d
+#          "
+#
+#      - name: Cleanup SSH keys
+#        run: rm -rf ~/.ssh

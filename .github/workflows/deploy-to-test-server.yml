@@ -2,11 +2,10 @@ name: Deploy to test server
 
 on: workflow_dispatch
 
-jobs:
-  deploy:
-    name: Deploy docker-compose to test server
-    runs-on: ubuntu-latest
-
+#jobs:
+#  deploy:
+#    name: Deploy docker-compose to test server
+#    runs-on: ubuntu-latest
 #    steps:
 #      - uses: actions/checkout@v3
 #      - name: Tailscale

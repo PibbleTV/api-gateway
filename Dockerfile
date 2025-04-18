@@ -16,5 +16,5 @@ EXPOSE 8078
 # Run the application
 ENTRYPOINT ["java", "-jar", "api_gateway.jar"]
 
-#docker build -t api-gateway -f Dockerfile .
-#docker run -d --name api-gateway -p 8078:8078 api-gateway
+#docker build -t ghcr.io/pibbletv/pibbletv-gateway:latest -f Dockerfile .
+#docker run -d --name api-gateway -p 8078:8078 ghcr.io/pibbletv/pibbletv-gateway:latest

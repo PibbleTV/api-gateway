@@ -1,7 +1,10 @@
+package com.pibbletv.api_gateway;
+
+import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
@@ -24,20 +27,21 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .pathMatchers(HttpMethod.GET, "/**").permitAll()
-                        .pathMatchers(HttpMethod.POST, "/**").permitAll()
+                        .pathMatchers("/category/**").permitAll()
                         .anyExchange().authenticated()
                 )
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(Customizer.withDefaults())
+                )
                 .exceptionHandling(handling -> handling
-                        .authenticationEntryPoint((exchange, ex) ->
-                                Mono.fromRunnable(() -> {
-                                    exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
-                                })
-                        )
+                        .authenticationEntryPoint((exchange, ex) -> {
+                            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                            return Mono.empty();
+                        })
                 )
                 .build();
     }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {

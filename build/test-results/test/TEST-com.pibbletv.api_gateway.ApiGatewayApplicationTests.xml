@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.pibbletv.api_gateway.ApiGatewayApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-04-18T21:40:30.336Z" hostname="DESKTOP-NS6POVE" time="0.886">
+<testsuite name="com.pibbletv.api_gateway.ApiGatewayApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-04-19T00:13:45.659Z" hostname="DESKTOP-NS6POVE" time="0.806">
   <properties/>
-  <testcase name="contextLoads()" classname="com.pibbletv.api_gateway.ApiGatewayApplicationTests" time="0.886"/>
+  <testcase name="contextLoads()" classname="com.pibbletv.api_gateway.ApiGatewayApplicationTests" time="0.806"/>
   <system-out><![CDATA[Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
-23:40:26.020 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.pibbletv.api_gateway.ApiGatewayApplicationTests]: ApiGatewayApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-23:40:26.178 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.pibbletv.api_gateway.ApiGatewayApplication for test class com.pibbletv.api_gateway.ApiGatewayApplicationTests
+02:13:41.458 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.pibbletv.api_gateway.ApiGatewayApplicationTests]: ApiGatewayApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+02:13:41.598 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.pibbletv.api_gateway.ApiGatewayApplication for test class com.pibbletv.api_gateway.ApiGatewayApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -15,22 +15,22 @@
 
  :: Spring Boot ::                (v3.4.4)
 
-2025-04-18T23:40:26.977+02:00  INFO 14292 --- [api_gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Starting ApiGatewayApplicationTests using Java 17.0.12 with PID 14292 (started by hristo in D:\Individual Assignment\PibbleTV-Backend\api-gateway)
-2025-04-18T23:40:26.979+02:00  INFO 14292 --- [api_gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : No active profile set, falling back to 1 default profile: "default"
-2025-04-18T23:40:27.973+02:00  INFO 14292 --- [api_gateway] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ff0e26ad-fc4d-3fb6-952d-dc99519687fa
-2025-04-18T23:40:29.205+02:00  INFO 14292 --- [api_gateway] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses WebClient.
-2025-04-18T23:40:29.372+02:00  WARN 14292 --- [api_gateway] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2025-04-18T23:40:29.476+02:00  INFO 14292 --- [api_gateway] [    Test worker] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2025-04-18T23:40:29.511+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2025-04-18T23:40:29.517+02:00  INFO 14292 --- [api_gateway] [    Test worker] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2025-04-18T23:40:29.531+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2025-04-18T23:40:29.531+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2025-04-18T23:40:29.531+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2025-04-18T23:40:29.531+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2025-04-18T23:40:29.532+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2025-04-18T23:40:29.532+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2025-04-18T23:40:29.532+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2025-04-18T23:40:30.276+02:00  INFO 14292 --- [api_gateway] [    Test worker] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://service-registry:8761/eureka/}, exception=Failed to resolve 'service-registry' [A(1)] after 2 queries  stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Failed to resolve 'service-registry' [A(1)] after 2 queries 
+2025-04-19T02:13:42.366+02:00  INFO 13804 --- [api_gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Starting ApiGatewayApplicationTests using Java 17.0.12 with PID 13804 (started by hristo in D:\Individual Assignment\PibbleTV-Backend\api-gateway)
+2025-04-19T02:13:42.368+02:00  INFO 13804 --- [api_gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : No active profile set, falling back to 1 default profile: "default"
+2025-04-19T02:13:43.348+02:00  INFO 13804 --- [api_gateway] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=ff0e26ad-fc4d-3fb6-952d-dc99519687fa
+2025-04-19T02:13:44.602+02:00  INFO 13804 --- [api_gateway] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses WebClient.
+2025-04-19T02:13:44.780+02:00  WARN 13804 --- [api_gateway] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-04-19T02:13:44.870+02:00  INFO 13804 --- [api_gateway] [    Test worker] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-04-19T02:13:44.900+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2025-04-19T02:13:44.907+02:00  INFO 13804 --- [api_gateway] [    Test worker] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-04-19T02:13:44.919+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-04-19T02:13:44.919+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-04-19T02:13:44.919+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-04-19T02:13:44.919+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-04-19T02:13:44.919+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-04-19T02:13:44.919+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-04-19T02:13:44.919+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-04-19T02:13:45.597+02:00  INFO 13804 --- [api_gateway] [    Test worker] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://service-registry:8761/eureka/}, exception=Failed to resolve 'service-registry' [A(1)] after 2 queries  stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Failed to resolve 'service-registry' [A(1)] after 2 queries 
 	at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$9(ExchangeFunctions.java:137)
 	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
 Error has been observed at the following site(s):
@@ -331,8 +331,8 @@ Caused by: java.net.UnknownHostException: Failed to resolve 'service-registry' [
 Caused by: io.netty.resolver.dns.DnsErrorCauseException: Query failed with NXDOMAIN
 	at io.netty.resolver.dns.DnsResolveContext.onResponse(..)(Unknown Source)
 
-2025-04-18T23:40:30.286+02:00  WARN 14292 --- [api_gateway] [    Test worker] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Failed to resolve 'service-registry' [A(1)] after 2 queries 
-2025-04-18T23:40:30.287+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API_GATEWAY/host.docker.internal:api_gateway:8078 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+2025-04-19T02:13:45.605+02:00  WARN 13804 --- [api_gateway] [    Test worker] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Failed to resolve 'service-registry' [A(1)] after 2 queries 
+2025-04-19T02:13:45.607+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API_GATEWAY/host.docker.internal:api_gateway:8078 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
 	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
 	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
@@ -487,17 +487,17 @@ Caused by: io.netty.resolver.dns.DnsErrorCauseException: Query failed with NXDOM
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
-2025-04-18T23:40:30.291+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from primary servers failed
-2025-04-18T23:40:30.291+02:00  WARN 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Using default backup registry implementation which does not do anything.
-2025-04-18T23:40:30.291+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from backup servers failed
-2025-04-18T23:40:30.292+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2025-04-18T23:40:30.295+02:00  INFO 14292 --- [api_gateway] [    Test worker] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2025-04-18T23:40:30.298+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1745012430297 with initial instances count: 0
-2025-04-18T23:40:30.304+02:00  INFO 14292 --- [api_gateway] [    Test worker] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API_GATEWAY with eureka with status UP
-2025-04-18T23:40:30.306+02:00  INFO 14292 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1745012430306, current=UP, previous=STARTING]
-2025-04-18T23:40:30.311+02:00  INFO 14292 --- [api_gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API_GATEWAY/host.docker.internal:api_gateway:8078: registering service...
-2025-04-18T23:40:30.328+02:00  INFO 14292 --- [api_gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Started ApiGatewayApplicationTests in 3.814 seconds (process running for 5.294)
-2025-04-18T23:40:30.419+02:00  INFO 14292 --- [api_gateway] [foReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://service-registry:8761/eureka/}, exception=Failed to resolve 'service-registry' [A(1)] after 2 queries  stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Failed to resolve 'service-registry' [A(1)] after 2 queries 
+2025-04-19T02:13:45.611+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from primary servers failed
+2025-04-19T02:13:45.611+02:00  WARN 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Using default backup registry implementation which does not do anything.
+2025-04-19T02:13:45.613+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from backup servers failed
+2025-04-19T02:13:45.615+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2025-04-19T02:13:45.617+02:00  INFO 13804 --- [api_gateway] [    Test worker] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-04-19T02:13:45.622+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1745021625621 with initial instances count: 0
+2025-04-19T02:13:45.626+02:00  INFO 13804 --- [api_gateway] [    Test worker] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API_GATEWAY with eureka with status UP
+2025-04-19T02:13:45.629+02:00  INFO 13804 --- [api_gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1745021625629, current=UP, previous=STARTING]
+2025-04-19T02:13:45.633+02:00  INFO 13804 --- [api_gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API_GATEWAY/host.docker.internal:api_gateway:8078: registering service...
+2025-04-19T02:13:45.650+02:00  INFO 13804 --- [api_gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Started ApiGatewayApplicationTests in 3.769 seconds (process running for 5.327)
+2025-04-19T02:13:45.691+02:00  INFO 13804 --- [api_gateway] [foReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://service-registry:8761/eureka/}, exception=Failed to resolve 'service-registry' [A(1)] after 2 queries  stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Failed to resolve 'service-registry' [A(1)] after 2 queries 
 	at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$9(ExchangeFunctions.java:137)
 	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
 Error has been observed at the following site(s):
@@ -658,8 +658,8 @@ Caused by: java.net.UnknownHostException: Failed to resolve 'service-registry' [
 Caused by: io.netty.resolver.dns.DnsErrorCauseException: Query failed with NXDOMAIN
 	at io.netty.resolver.dns.DnsResolveContext.onResponse(..)(Unknown Source)
 
-2025-04-18T23:40:30.425+02:00  WARN 14292 --- [api_gateway] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Failed to resolve 'service-registry' [A(1)] after 2 queries 
-2025-04-18T23:40:30.426+02:00  WARN 14292 --- [api_gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API_GATEWAY/host.docker.internal:api_gateway:8078 - registration failed Cannot execute request on any known server
+2025-04-19T02:13:45.695+02:00  WARN 13804 --- [api_gateway] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Failed to resolve 'service-registry' [A(1)] after 2 queries 
+2025-04-19T02:13:45.696+02:00  WARN 13804 --- [api_gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API_GATEWAY/host.docker.internal:api_gateway:8078 - registration failed Cannot execute request on any known server
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
@@ -677,7 +677,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
 	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
 
-2025-04-18T23:40:30.436+02:00  WARN 14292 --- [api_gateway] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+2025-04-19T02:13:45.706+02:00  WARN 13804 --- [api_gateway] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]

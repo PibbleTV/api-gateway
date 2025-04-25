@@ -1,7 +1,7 @@
 name: CI/CD Pipeline
 
 on:
-  push:
+  pull_request:
     branches:
       - "main"
 
@@ -23,7 +23,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Spring Boot app with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean build --stacktrace
 
       - name: Build Docker image
         run: |

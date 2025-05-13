@@ -21,7 +21,11 @@ jobs:
       - name: Copy all files to VM
         run: |
           scp -o StrictHostKeyChecking=no \
-            docker-compose-*.yml kompose-*.override.yml \
+            PibbleTV-Backend/docker-compose-backend.yml PibbleTV-Backend/kompose-backend.override.yml \
+            ${{ secrets.SSH_USER }}@145.220.75.5:/home/${{ secrets.SSH_USER }}/
+      
+          scp -o StrictHostKeyChecking=no \
+            react-app/docker-compose-frontend.yml react-app/kompose-frontend.override.yml \
             ${{ secrets.SSH_USER }}@145.220.75.5:/home/${{ secrets.SSH_USER }}/
 
       - name: Delete all current kubernetes pods

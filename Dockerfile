@@ -1,8 +1,4 @@
-# Use Oracle Linux 8 as the base image
-FROM oraclelinux:8
-
-# Install OpenJDK
-RUN dnf install -y java-17-openjdk
+FROM openjdk:17-alpine
 
 # Set the working directory inside the container
 WORKDIR /app

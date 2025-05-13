@@ -1,8 +1,8 @@
 package com.pibbletv.api_gateway;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -21,13 +21,15 @@ import java.util.List;
 @Configuration
 public class SecurityConfig {
 
+
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/category/**").permitAll()
+                        .pathMatchers(HttpMethod.GET, "/**").permitAll()
+                        .pathMatchers(HttpMethod.PUT, "/category/addCategory").hasRole("admin")
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
@@ -46,9 +48,9 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("http://localhost:5173"));
-        corsConfig.setAllowedMethods(List.of("GET", "POST", "OPTIONS"));
-        corsConfig.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept", "Authorization"));
+        corsConfig.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost"));
+        corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "OPTIONS"));
+        corsConfig.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept", "Authorization", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         corsConfig.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

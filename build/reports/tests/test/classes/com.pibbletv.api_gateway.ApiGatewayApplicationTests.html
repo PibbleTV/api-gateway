@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.843s</div>
+<div class="counter">0.868s</div>
 <p>duration</p>
 </div>
 </td>
@@ -79,7 +79,7 @@
 </thead>
 <tr>
 <td class="success">contextLoads()</td>
-<td class="success">0.843s</td>
+<td class="success">0.868s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -88,8 +88,8 @@
 <h2>Standard output</h2>
 <span class="code">
 <pre>Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
-17:37:51.250 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.pibbletv.api_gateway.ApiGatewayApplicationTests]: ApiGatewayApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-17:37:51.402 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.pibbletv.api_gateway.ApiGatewayApplication for test class com.pibbletv.api_gateway.ApiGatewayApplicationTests
+01:33:00.560 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.pibbletv.api_gateway.ApiGatewayApplicationTests]: ApiGatewayApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+01:33:00.705 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.pibbletv.api_gateway.ApiGatewayApplication for test class com.pibbletv.api_gateway.ApiGatewayApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -100,96 +100,96 @@
 
  :: Spring Boot ::                (v3.4.4)
 
-2025-05-13T17:37:52.247+02:00  INFO 10700 --- [api-gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Starting ApiGatewayApplicationTests using Java 17.0.12 with PID 10700 (started by hristo in D:\Individual Assignment\PibbleTV-Backend\api-gateway)
-2025-05-13T17:37:52.249+02:00  INFO 10700 --- [api-gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : No active profile set, falling back to 1 default profile: &quot;default&quot;
-2025-05-13T17:37:52.859+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayReactiveLoadBalancerClientAutoConfiguration#gatewayLoadBalancerClientFilter matched
-2025-05-13T17:37:52.863+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayReactiveLoadBalancerClientAutoConfiguration#loadBalancerServiceInstanceCookieFilter matched
-2025-05-13T17:37:52.876+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#routingFilter matched
-2025-05-13T17:37:52.877+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#nettyWriteResponseFilter matched
-2025-05-13T17:37:52.878+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#reactorNettyWebSocketClient matched
-2025-05-13T17:37:52.879+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#reactorNettyRequestUpgradeStrategy matched
-2025-05-13T17:37:52.928+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#adaptCachedBodyGlobalFilter matched
-2025-05-13T17:37:52.928+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeCachedBodyFilter matched
-2025-05-13T17:37:52.929+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#routeToRequestUrlFilter matched
-2025-05-13T17:37:52.929+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#forwardRoutingFilter matched
-2025-05-13T17:37:52.930+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#forwardPathFilter matched
-2025-05-13T17:37:52.930+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#webSocketService matched
-2025-05-13T17:37:52.931+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#websocketRoutingFilter matched
-2025-05-13T17:37:52.931+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#weightCalculatorWebFilter matched
-2025-05-13T17:37:52.932+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#afterRoutePredicateFactory matched
-2025-05-13T17:37:52.932+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#beforeRoutePredicateFactory matched
-2025-05-13T17:37:52.932+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#betweenRoutePredicateFactory matched
-2025-05-13T17:37:52.933+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cookieRoutePredicateFactory matched
-2025-05-13T17:37:52.933+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#headerRoutePredicateFactory matched
-2025-05-13T17:37:52.934+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#hostRoutePredicateFactory matched
-2025-05-13T17:37:52.934+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#methodRoutePredicateFactory matched
-2025-05-13T17:37:52.935+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#pathRoutePredicateFactory matched
-2025-05-13T17:37:52.935+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#queryRoutePredicateFactory matched
-2025-05-13T17:37:52.935+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#readBodyPredicateFactory matched
-2025-05-13T17:37:52.936+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#remoteAddrRoutePredicateFactory matched
-2025-05-13T17:37:52.936+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#xForwardedRemoteAddrRoutePredicateFactory matched
-2025-05-13T17:37:52.937+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#weightRoutePredicateFactory matched
-2025-05-13T17:37:52.937+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cloudFoundryRouteServiceRoutePredicateFactory matched
-2025-05-13T17:37:52.938+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addRequestHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.939+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addRequestHeadersIfNotPresentGatewayFilterFactory matched
-2025-05-13T17:37:52.939+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#mapRequestHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.939+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addRequestParameterGatewayFilterFactory matched
-2025-05-13T17:37:52.940+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addResponseHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.940+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#modifyRequestBodyGatewayFilterFactory matched
-2025-05-13T17:37:52.941+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#dedupeResponseHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.941+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#modifyResponseBodyGatewayFilterFactory matched
-2025-05-13T17:37:52.942+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cacheRequestBodyGatewayFilterFactory matched
-2025-05-13T17:37:52.942+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#prefixPathGatewayFilterFactory matched
-2025-05-13T17:37:52.943+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#preserveHostHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.943+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#redirectToGatewayFilterFactory matched
-2025-05-13T17:37:52.944+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeJsonAttributesResponseBodyGatewayFilterFactory matched
-2025-05-13T17:37:52.944+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeRequestHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.944+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeRequestParameterGatewayFilterFactory matched
-2025-05-13T17:37:52.945+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeResponseHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.953+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewritePathGatewayFilterFactory matched
-2025-05-13T17:37:52.953+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#retryGatewayFilterFactory matched
-2025-05-13T17:37:52.954+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setPathGatewayFilterFactory matched
-2025-05-13T17:37:52.954+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#secureHeadersGatewayFilterFactory matched
-2025-05-13T17:37:52.955+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setRequestHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.955+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setRequestHostHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.955+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setResponseHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.956+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewriteResponseHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.956+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewriteLocationResponseHeaderGatewayFilterFactory matched
-2025-05-13T17:37:52.957+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setStatusGatewayFilterFactory matched
-2025-05-13T17:37:52.957+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#saveSessionGatewayFilterFactory matched
-2025-05-13T17:37:52.957+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#stripPrefixGatewayFilterFactory matched
-2025-05-13T17:37:52.958+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#requestHeaderToRequestUriGatewayFilterFactory matched
-2025-05-13T17:37:52.958+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#requestSizeGatewayFilterFactory matched
-2025-05-13T17:37:52.958+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#requestHeaderSizeGatewayFilterFactory matched
-2025-05-13T17:37:52.959+02:00 TRACE 10700 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewriteRequestParameterGatewayFilterFactory matched
-2025-05-13T17:37:53.279+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=bd4f73e7-ec6e-3bfd-9eac-6713a865d0eb
-2025-05-13T17:37:54.758+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
-2025-05-13T17:37:54.759+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
-2025-05-13T17:37:54.760+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
-2025-05-13T17:37:54.760+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
-2025-05-13T17:37:54.760+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
-2025-05-13T17:37:54.760+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
-2025-05-13T17:37:55.154+02:00  INFO 10700 --- [api-gateway] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses WebClient.
-2025-05-13T17:37:55.340+02:00  WARN 10700 --- [api-gateway] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
-2025-05-13T17:37:55.381+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
-2025-05-13T17:37:55.410+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
-2025-05-13T17:37:55.415+02:00  INFO 10700 --- [api-gateway] [    Test worker] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
-2025-05-13T17:37:55.430+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
-2025-05-13T17:37:55.430+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
-2025-05-13T17:37:55.430+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
-2025-05-13T17:37:55.430+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application is null : false
-2025-05-13T17:37:55.430+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
-2025-05-13T17:37:55.430+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
-2025-05-13T17:37:55.430+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
-2025-05-13T17:37:55.893+02:00  INFO 10700 --- [api-gateway] [    Test worker] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=Connection refused: no further information: localhost/127.0.0.1:8761 stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Connection refused: no further information: localhost/127.0.0.1:8761
+2025-05-14T01:33:01.549+02:00  INFO 14132 --- [api-gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Starting ApiGatewayApplicationTests using Java 17.0.12 with PID 14132 (started by hristo in D:\Individual Assignment\PibbleTV-Backend\api-gateway)
+2025-05-14T01:33:01.550+02:00  INFO 14132 --- [api-gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-05-14T01:33:02.183+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayReactiveLoadBalancerClientAutoConfiguration#gatewayLoadBalancerClientFilter matched
+2025-05-14T01:33:02.187+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayReactiveLoadBalancerClientAutoConfiguration#loadBalancerServiceInstanceCookieFilter matched
+2025-05-14T01:33:02.203+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#routingFilter matched
+2025-05-14T01:33:02.203+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#nettyWriteResponseFilter matched
+2025-05-14T01:33:02.204+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#reactorNettyWebSocketClient matched
+2025-05-14T01:33:02.205+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration$NettyConfiguration#reactorNettyRequestUpgradeStrategy matched
+2025-05-14T01:33:02.246+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#adaptCachedBodyGlobalFilter matched
+2025-05-14T01:33:02.247+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeCachedBodyFilter matched
+2025-05-14T01:33:02.247+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#routeToRequestUrlFilter matched
+2025-05-14T01:33:02.248+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#forwardRoutingFilter matched
+2025-05-14T01:33:02.248+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#forwardPathFilter matched
+2025-05-14T01:33:02.248+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#webSocketService matched
+2025-05-14T01:33:02.249+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledGlobalFilter        : Condition OnEnabledGlobalFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#websocketRoutingFilter matched
+2025-05-14T01:33:02.249+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#weightCalculatorWebFilter matched
+2025-05-14T01:33:02.250+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#afterRoutePredicateFactory matched
+2025-05-14T01:33:02.250+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#beforeRoutePredicateFactory matched
+2025-05-14T01:33:02.251+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#betweenRoutePredicateFactory matched
+2025-05-14T01:33:02.251+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cookieRoutePredicateFactory matched
+2025-05-14T01:33:02.251+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#headerRoutePredicateFactory matched
+2025-05-14T01:33:02.252+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#hostRoutePredicateFactory matched
+2025-05-14T01:33:02.252+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#methodRoutePredicateFactory matched
+2025-05-14T01:33:02.252+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#pathRoutePredicateFactory matched
+2025-05-14T01:33:02.253+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#queryRoutePredicateFactory matched
+2025-05-14T01:33:02.253+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#readBodyPredicateFactory matched
+2025-05-14T01:33:02.253+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#remoteAddrRoutePredicateFactory matched
+2025-05-14T01:33:02.254+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#xForwardedRemoteAddrRoutePredicateFactory matched
+2025-05-14T01:33:02.254+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#weightRoutePredicateFactory matched
+2025-05-14T01:33:02.255+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.c.OnEnabledPredicate           : Condition OnEnabledPredicate on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cloudFoundryRouteServiceRoutePredicateFactory matched
+2025-05-14T01:33:02.256+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addRequestHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.256+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addRequestHeadersIfNotPresentGatewayFilterFactory matched
+2025-05-14T01:33:02.256+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#mapRequestHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.257+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addRequestParameterGatewayFilterFactory matched
+2025-05-14T01:33:02.257+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#addResponseHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.258+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#modifyRequestBodyGatewayFilterFactory matched
+2025-05-14T01:33:02.258+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#dedupeResponseHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.258+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#modifyResponseBodyGatewayFilterFactory matched
+2025-05-14T01:33:02.259+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#cacheRequestBodyGatewayFilterFactory matched
+2025-05-14T01:33:02.259+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#prefixPathGatewayFilterFactory matched
+2025-05-14T01:33:02.259+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#preserveHostHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.260+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#redirectToGatewayFilterFactory matched
+2025-05-14T01:33:02.261+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeJsonAttributesResponseBodyGatewayFilterFactory matched
+2025-05-14T01:33:02.261+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeRequestHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.261+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeRequestParameterGatewayFilterFactory matched
+2025-05-14T01:33:02.262+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#removeResponseHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.269+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewritePathGatewayFilterFactory matched
+2025-05-14T01:33:02.270+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#retryGatewayFilterFactory matched
+2025-05-14T01:33:02.270+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setPathGatewayFilterFactory matched
+2025-05-14T01:33:02.270+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#secureHeadersGatewayFilterFactory matched
+2025-05-14T01:33:02.271+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setRequestHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.271+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setRequestHostHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.271+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setResponseHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.272+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewriteResponseHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.272+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewriteLocationResponseHeaderGatewayFilterFactory matched
+2025-05-14T01:33:02.272+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#setStatusGatewayFilterFactory matched
+2025-05-14T01:33:02.273+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#saveSessionGatewayFilterFactory matched
+2025-05-14T01:33:02.273+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#stripPrefixGatewayFilterFactory matched
+2025-05-14T01:33:02.273+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#requestHeaderToRequestUriGatewayFilterFactory matched
+2025-05-14T01:33:02.274+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#requestSizeGatewayFilterFactory matched
+2025-05-14T01:33:02.274+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#requestHeaderSizeGatewayFilterFactory matched
+2025-05-14T01:33:02.277+02:00 TRACE 14132 --- [api-gateway] [    Test worker] o.s.c.g.c.conditional.OnEnabledFilter    : Condition OnEnabledFilter on org.springframework.cloud.gateway.config.GatewayAutoConfiguration#rewriteRequestParameterGatewayFilterFactory matched
+2025-05-14T01:33:02.586+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.cloud.context.scope.GenericScope     : BeanFactory id=bd4f73e7-ec6e-3bfd-9eac-6713a865d0eb
+2025-05-14T01:33:04.164+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [After]
+2025-05-14T01:33:04.164+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Before]
+2025-05-14T01:33:04.164+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Between]
+2025-05-14T01:33:04.164+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Cookie]
+2025-05-14T01:33:04.164+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Header]
+2025-05-14T01:33:04.164+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Host]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Method]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Path]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Query]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [ReadBody]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [RemoteAddr]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [XForwardedRemoteAddr]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [Weight]
+2025-05-14T01:33:04.165+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.g.r.RouteDefinitionRouteLocator    : Loaded RoutePredicateFactory [CloudFoundryRouteService]
+2025-05-14T01:33:04.602+02:00  INFO 14132 --- [api-gateway] [    Test worker] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses WebClient.
+2025-05-14T01:33:04.813+02:00  WARN 14132 --- [api-gateway] [    Test worker] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2025-05-14T01:33:04.853+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2025-05-14T01:33:04.880+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2025-05-14T01:33:04.885+02:00  INFO 14132 --- [api-gateway] [    Test worker] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2025-05-14T01:33:04.895+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2025-05-14T01:33:04.895+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2025-05-14T01:33:04.895+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2025-05-14T01:33:04.895+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2025-05-14T01:33:04.895+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2025-05-14T01:33:04.895+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2025-05-14T01:33:04.895+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2025-05-14T01:33:05.380+02:00  INFO 14132 --- [api-gateway] [    Test worker] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=Connection refused: no further information: localhost/127.0.0.1:8761 stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Connection refused: no further information: localhost/127.0.0.1:8761
 	at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$9(ExchangeFunctions.java:137)
 	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
 Error has been observed at the following site(s):
@@ -434,8 +434,8 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2025-05-13T17:37:55.899+02:00  WARN 10700 --- [api-gateway] [    Test worker] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Connection refused: no further information: localhost/127.0.0.1:8761
-2025-05-13T17:37:55.900+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/host.docker.internal:api-gateway:8078 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
+2025-05-14T01:33:05.390+02:00  WARN 14132 --- [api-gateway] [    Test worker] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Connection refused: no further information: localhost/127.0.0.1:8761
+2025-05-14T01:33:05.391+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/host.docker.internal:api-gateway:8078 - was unable to refresh its cache! This periodic background refresh will be retried in 30 seconds. status = Cannot execute request on any known server stacktrace = com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112)
 	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator.getApplications(EurekaHttpClientDecorator.java:134)
 	at com.netflix.discovery.shared.transport.decorator.EurekaHttpClientDecorator$6.execute(EurekaHttpClientDecorator.java:137)
@@ -590,16 +590,16 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 
-2025-05-13T17:37:55.902+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from primary servers failed
-2025-05-13T17:37:55.902+02:00  WARN 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Using default backup registry implementation which does not do anything.
-2025-05-13T17:37:55.903+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from backup servers failed
-2025-05-13T17:37:55.904+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
-2025-05-13T17:37:55.908+02:00  INFO 10700 --- [api-gateway] [    Test worker] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
-2025-05-13T17:37:55.911+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1747150675909 with initial instances count: 0
-2025-05-13T17:37:55.916+02:00  INFO 10700 --- [api-gateway] [    Test worker] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
-2025-05-13T17:37:55.917+02:00  INFO 10700 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1747150675917, current=UP, previous=STARTING]
-2025-05-13T17:37:55.919+02:00  INFO 10700 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/host.docker.internal:api-gateway:8078: registering service...
-2025-05-13T17:37:55.929+02:00  INFO 10700 --- [api-gateway] [foReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=Connection refused: no further information: localhost/127.0.0.1:8761 stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Connection refused: no further information: localhost/127.0.0.1:8761
+2025-05-14T01:33:05.395+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from primary servers failed
+2025-05-14T01:33:05.395+02:00  WARN 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Using default backup registry implementation which does not do anything.
+2025-05-14T01:33:05.397+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Initial registry fetch from backup servers failed
+2025-05-14T01:33:05.399+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2025-05-14T01:33:05.402+02:00  INFO 14132 --- [api-gateway] [    Test worker] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2025-05-14T01:33:05.406+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1747179185403 with initial instances count: 0
+2025-05-14T01:33:05.414+02:00  INFO 14132 --- [api-gateway] [    Test worker] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application API-GATEWAY with eureka with status UP
+2025-05-14T01:33:05.415+02:00  INFO 14132 --- [api-gateway] [    Test worker] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1747179185415, current=UP, previous=STARTING]
+2025-05-14T01:33:05.418+02:00  INFO 14132 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/host.docker.internal:api-gateway:8078: registering service...
+2025-05-14T01:33:05.431+02:00  INFO 14132 --- [api-gateway] [foReplicator-%d] c.n.d.s.t.d.RedirectingEurekaHttpClient  : Request execution error. endpoint=DefaultEndpoint{ serviceUrl='http://localhost:8761/eureka/}, exception=Connection refused: no further information: localhost/127.0.0.1:8761 stacktrace=org.springframework.web.reactive.function.client.WebClientRequestException: Connection refused: no further information: localhost/127.0.0.1:8761
 	at org.springframework.web.reactive.function.client.ExchangeFunctions$DefaultExchangeFunction.lambda$wrapException$9(ExchangeFunctions.java:137)
 	Suppressed: The stacktrace has been enhanced by Reactor, refer to additional information below: 
 Error has been observed at the following site(s):
@@ -704,8 +704,8 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30)
 	at java.base/java.lang.Thread.run(Thread.java:842)
 
-2025-05-13T17:37:55.931+02:00  WARN 10700 --- [api-gateway] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Connection refused: no further information: localhost/127.0.0.1:8761
-2025-05-13T17:37:55.931+02:00  WARN 10700 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/host.docker.internal:api-gateway:8078 - registration failed Cannot execute request on any known server
+2025-05-14T01:33:05.433+02:00  WARN 14132 --- [api-gateway] [foReplicator-%d] c.n.d.s.t.d.RetryableEurekaHttpClient    : Request execution failed with message: Connection refused: no further information: localhost/127.0.0.1:8761
+2025-05-14T01:33:05.433+02:00  WARN 14132 --- [api-gateway] [foReplicator-%d] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_API-GATEWAY/host.docker.internal:api-gateway:8078 - registration failed Cannot execute request on any known server
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
@@ -723,7 +723,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
 	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
 
-2025-05-13T17:37:55.937+02:00  WARN 10700 --- [api-gateway] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
+2025-05-14T01:33:05.439+02:00  WARN 14132 --- [api-gateway] [foReplicator-%d] c.n.discovery.InstanceInfoReplicator     : There was a problem with the instance info replicator
 
 com.netflix.discovery.shared.transport.TransportException: Cannot execute request on any known server
 	at com.netflix.discovery.shared.transport.decorator.RetryableEurekaHttpClient.execute(RetryableEurekaHttpClient.java:112) ~[eureka-client-2.0.4.jar:2.0.4]
@@ -741,7 +741,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635) ~[na:na]
 	at java.base/java.lang.Thread.run(Thread.java:842) ~[na:na]
 
-2025-05-13T17:37:55.964+02:00  INFO 10700 --- [api-gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Started ApiGatewayApplicationTests in 4.231 seconds (process running for 5.77)
+2025-05-14T01:33:05.470+02:00  INFO 14132 --- [api-gateway] [    Test worker] c.p.a.ApiGatewayApplicationTests         : Started ApiGatewayApplicationTests in 4.42 seconds (process running for 6.068)
 </pre>
 </span>
 </div>
@@ -753,7 +753,7 @@ com.netflix.discovery.shared.transport.TransportException: Cannot execute reques
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 8.13</a> at May 13, 2025, 5:37:59 PM</p>
+<a href="https://www.gradle.org">Gradle 8.13</a> at May 14, 2025, 1:33:12 AM</p>
 </div>
 </div>
 </body>

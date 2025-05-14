@@ -9,8 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout backend repo
         uses: actions/checkout@v3
+
+      - name: Checkout frontend repo
+        uses: actions/checkout@v3
+        with:
+          repository: PibbleTV/react-app
+          token: ${{ secrets.GH_TOKEN }}
+          path: frontend
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -21,11 +28,11 @@ jobs:
       - name: Copy all files to VM
         run: |
           scp -o StrictHostKeyChecking=no \
-            PibbleTV-Backend/docker-compose-backend.yml PibbleTV-Backend/kompose-backend.override.yml \
+            docker-compose-backend.yml kompose-backend.override.yml \
             ${{ secrets.SSH_USER }}@145.220.75.5:/home/${{ secrets.SSH_USER }}/
-      
+
           scp -o StrictHostKeyChecking=no \
-            react-app/docker-compose-frontend.yml react-app/kompose-frontend.override.yml \
+            frontend/docker-compose-frontend.yml frontend/kompose-frontend.override.yml \
             ${{ secrets.SSH_USER }}@145.220.75.5:/home/${{ secrets.SSH_USER }}/
 
       - name: Delete all current kubernetes pods

@@ -25,10 +25,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Recreate variables.env
+        run: |
+          echo "${{ secrets.BACKEND_ENV_FILE }}" > variables.env
+
       - name: Copy all files to VM
         run: |
           scp -o StrictHostKeyChecking=no \
-            docker-compose-backend.yml kompose-backend.override.yml \
+            docker-compose-backend.yml kompose-backend.override.yml variables.env \
             ${{ secrets.SSH_USER }}@145.220.75.5:/home/${{ secrets.SSH_USER }}/
 
           scp -o StrictHostKeyChecking=no \
@@ -49,6 +53,8 @@ jobs:
             cd /home/${{ secrets.SSH_USER }}
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
+
+            export $(grep -v '^#' variables.env | xargs)
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f docker-compose-backend.yml -f kompose-backend.override.yml -o k8s-backend/
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f docker-compose-frontend.yml -f kompose-frontend.override.yml -o k8s-frontend/

@@ -27,7 +27,11 @@ jobs:
 
       - name: Setup SSH
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s' "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          [ -s ~/.ssh/id_rsa ] || { echo "Error: SSH private key is empty or missing"; exit 1; }
           ssh-keyscan -T 30 -H 145.220.75.5 > ~/.ssh/known_hosts
 
       - name: Recreate variables.env

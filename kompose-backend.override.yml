@@ -48,3 +48,9 @@ services:
     labels:
       kompose.service.type: "LoadBalancer"
       kompose.image-pull-secret: "ghcr-credentials"
+
+  keycloak:
+    ports:
+      - "8080:8080"
+    labels:
+      kompose.service.type: "NodePort"

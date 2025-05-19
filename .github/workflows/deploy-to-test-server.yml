@@ -1,12 +1,14 @@
 name: Deploy to test server
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   deploy:
     name: Deploy docker-compose to test server
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
 
     steps:
       - name: Checkout backend repo
@@ -27,10 +29,10 @@ jobs:
 
       - name: Setup SSH
         run: |
-          mkdir -p $HOME/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > $HOME/.ssh/id_rsa
-          chmod 600 $HOME/.ssh/id_rsa
-          ssh-keyscan -T 30 -H 145.220.75.5 > $HOME/.ssh/known_hosts
+          mkdir -p ~/.ssh
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -T 30 -H 145.220.75.5 > ~/.ssh/known_hosts
 
       - name: Recreate variables.env
         run: |

@@ -36,13 +36,12 @@ jobs:
           java-version: '17'
 
       - name: Setup SSH
-        timeout-minutes: 3
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H 100.118.7.16 >> ~/.ssh/known_hosts
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -T 20 -H 100.118.7.16 > ~/.ssh/known_hosts || echo "ssh-keyscan failed"
 
       - name: Recreate variables.env
         run: |

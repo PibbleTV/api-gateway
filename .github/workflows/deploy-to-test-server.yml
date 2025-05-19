@@ -28,11 +28,12 @@ jobs:
           java-version: '17'
 
       - name: Setup SSH
+        timeout-minutes: 3
         run: |
           mkdir -p ~/.ssh
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -T 30 -H 145.220.75.5 > ~/.ssh/known_hosts
+          ssh-keyscan -T 60 -H 145.220.75.5 > ~/.ssh/known_hosts  # Increased from 30s to 60s
 
       - name: Recreate variables.env
         run: |

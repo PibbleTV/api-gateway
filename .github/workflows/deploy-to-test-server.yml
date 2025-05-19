@@ -4,6 +4,7 @@ on: workflow_dispatch
 
 jobs:
   deploy:
+    
     name: Deploy docker-compose to test server
     runs-on: ubuntu-latest
     permissions:

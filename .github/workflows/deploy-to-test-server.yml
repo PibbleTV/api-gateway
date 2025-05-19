@@ -30,10 +30,15 @@ jobs:
       - name: Setup SSH
         timeout-minutes: 3
         run: |
+          echo "Step start: $(date)"
           mkdir -p ~/.ssh
+          echo "mkdir done: $(date)"
+          ls -la ~/
           install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "install done: $(date)"
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -T 60 -H 145.220.75.5 > ~/.ssh/known_hosts  # Increased from 30s to 60s
+          echo "key write done: $(date)"
+          ssh-keyscan -T 10 -H 145.220.75.5 > ~/.ssh/known_hosts || echo "ssh-keyscan failed"
 
       - name: Recreate variables.env
         run: |

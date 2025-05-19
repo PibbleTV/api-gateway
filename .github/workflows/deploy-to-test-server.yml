@@ -4,7 +4,7 @@ on: workflow_dispatch
 
 jobs:
   deploy:
-    
+
     name: Deploy docker-compose to test server
     runs-on: ubuntu-latest
     permissions:
@@ -49,8 +49,8 @@ jobs:
 
       - name: Copy all files to VM
         run: |
-          scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
-          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
 
       - name: Delete all current kubernetes pods
         run: |

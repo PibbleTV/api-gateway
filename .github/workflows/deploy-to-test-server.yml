@@ -11,6 +11,12 @@ jobs:
       packages: read
 
     steps:
+      - uses: actions/checkout@v3
+      - name: Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+
       - name: Checkout backend repo
         uses: actions/checkout@v3
 
@@ -34,7 +40,7 @@ jobs:
           ls -la ~/
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -T 20 -H 145.220.75.5 > ~/.ssh/known_hosts || echo "ssh-keyscan failed"
+          ssh-keyscan -T 20 -H 100.118.7.16 > ~/.ssh/known_hosts || echo "ssh-keyscan failed"
 
       - name: Recreate variables.env
         run: |
@@ -42,19 +48,19 @@ jobs:
 
       - name: Copy all files to VM
         run: |
-          scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@145.220.75.5:/home/${{ secrets.SSH_USER }}
-          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@145.220.75.5:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
 
       - name: Delete all current kubernetes pods
         run: |
-          ssh ${{ secrets.SSH_USER }}@145.220.75.5 << 'EOF'
+          ssh ${{ secrets.SSH_USER }}@100.118.7.16 << EOF
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete deployments,services --all --namespace backend
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete deployments,services --all --namespace frontend
           EOF
 
       - name: Convert and apply Kubernetes manifests
         run: |
-          ssh ${{ secrets.SSH_USER }}@145.220.75.5 << EOF
+          ssh ${{ secrets.SSH_USER }}@100.118.7.16 << EOF
             set -e
             cd /home/${{ secrets.SSH_USER }}
 

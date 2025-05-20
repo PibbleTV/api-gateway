@@ -1,7 +1,6 @@
 name: Deploy to test server
 
-on:
-  workflow_dispatch
+on: workflow_dispatch
 
 jobs:
   deploy:
@@ -31,8 +30,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
-          java-version: '17'
+          distribution: "temurin"
+          java-version: "17"
 
       - name: Setup SSH
         run: |
@@ -40,7 +39,7 @@ jobs:
           chmod 700 ~/.ssh
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -T 20 -H 100.118.7.16 > ~/.ssh/known_hosts || echo "ssh-keyscan failed"
+          ssh-keyscan -T 20 -H 100.121.76.9 > ~/.ssh/known_hosts || echo "ssh-keyscan failed"
 
       - name: Recreate variables.env
         run: |
@@ -48,34 +47,34 @@ jobs:
 
       - name: Copy all files to VM
         run: |
-          scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
-          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/pibbletv-ingress.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/pibbletv-ingress.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
 
       - name: Delete all current kubernetes pods
         run: |
-          ssh ${{ secrets.SSH_USER }}@100.118.7.16 << EOF
+          ssh ${{ secrets.SSH_USER }}@1100.121.76.9 << EOF
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete deployments,services --all
           EOF
 
       - name: Convert and apply Kubernetes manifests
         run: |
-          ssh ${{ secrets.SSH_USER }}@100.118.7.16 << EOF
+          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
             set -e
             cd /home/${{ secrets.SSH_USER }}
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
 
             export $(grep -v '^#' variables.env | xargs)
-          
+
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-frontend.yml -o k8s-frontend/
-          
+
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-backend.yml -o k8s-backend/
             
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-frontend/ -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-backend/ -n default
-          
+
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/pibbletv-ingress.yml -n default
           EOF
 

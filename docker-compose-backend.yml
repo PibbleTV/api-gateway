@@ -31,7 +31,7 @@ services:
     container_name: keycloak
     command: start-dev
     environment:
-      KEYCLOAK_FRONTEND_URL: "http://auth.pibbletv.com/"
+      KEYCLOAK_FRONTEND_URL: "http://auth.pibbletv.com/auth"
       KEYCLOAK_ADMIN: admin1
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     ports:

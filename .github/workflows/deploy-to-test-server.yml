@@ -45,6 +45,13 @@ jobs:
         run: |
           echo "${{ secrets.BACKEND_ENV_FILE }}" > variables.env
 
+      - name: Delete old files
+        run: |
+          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f /home/${{ secrets.SSH_USER }}/*.yml /home/${{ secrets.SSH_USER }}/*.env
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /home/${{ secrets.SSH_USER }}/k8s-backend/* /home/${{ secrets.SSH_USER }}/k8s-frontend/*
+          EOF
+
       - name: Copy all files to VM
         run: |
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}

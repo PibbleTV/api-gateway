@@ -49,7 +49,7 @@ jobs:
       - name: Copy all files to VM
         run: |
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
-          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/ingress.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/pibbletv-ingress.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
 
       - name: Delete all current kubernetes pods
         run: |
@@ -76,7 +76,7 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-frontend/ -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-backend/ -n default
           
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress.yml -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/pibbletv-ingress.yml -n default
           EOF
 
       - name: Cleanup SSH keys

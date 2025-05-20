@@ -52,7 +52,7 @@ jobs:
 
       - name: Delete all current kubernetes pods
         run: |
-          ssh ${{ secrets.SSH_USER }}@1100.121.76.9 << EOF
+          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete deployments,services --all
           EOF
 

@@ -49,13 +49,12 @@ jobs:
       - name: Copy all files to VM
         run: |
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
-          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/ingress.yml frontend/kompose-frontend.override.yml ${{ secrets.SSH_USER }}@100.118.7.16:/home/${{ secrets.SSH_USER }}
 
       - name: Delete all current kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.118.7.16 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete deployments,services --all --namespace backend
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete deployments,services --all --namespace frontend
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete deployments,services --all
           EOF
 
       - name: Convert and apply Kubernetes manifests
@@ -67,18 +66,17 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
 
             export $(grep -v '^#' variables.env | xargs)
-
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-frontend.yml -o k8s-frontend/
           
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-backend.yml -o k8s-backend/
-
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl create namespace frontend --dry-run=client -o yaml | sudo k3s kubectl apply -f -
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl create namespace backend --dry-run=client -o yaml | sudo k3s kubectl apply -f -
             
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-frontend/ --namespace frontend
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-backend/ --namespace backend
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-frontend/ -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-backend/ -n default
+          
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress.yml -n default
           EOF
 
       - name: Cleanup SSH keys

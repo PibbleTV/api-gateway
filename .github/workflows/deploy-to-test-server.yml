@@ -73,7 +73,6 @@ jobs:
 
             export $(grep -v '^#' variables.env | xargs)
 
-#            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f docker-compose-frontend.yml -o k8s-frontend/
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml
@@ -86,7 +85,6 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl apply -f k8s-backend/ -n default
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/pibbletv-ingress.yml -n default
-          
           EOF
 
       - name: Cleanup SSH keys

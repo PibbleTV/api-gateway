@@ -60,7 +60,6 @@ jobs:
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pvc hls-data nginx-claim0 nginx-claim1 -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=category-service' -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=streaming-service' -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=api-gateway' -n default --ignore-not-found

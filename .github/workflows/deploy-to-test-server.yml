@@ -68,7 +68,6 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service donations-service -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service follows-service -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service mysql -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service nginx-tcp -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service nginx -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service srs -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service service-registry -n default --ignore-not-found

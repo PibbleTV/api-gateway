@@ -60,17 +60,17 @@ jobs:
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=category-service' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=streaming-service' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=api-gateway' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=user-service' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=keycloak' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=donations-service' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=follows-service' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=mysql' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=nginx' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=srs' -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service --selector='app=service-registry' -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service category-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service streaming-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service api-gateway -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service user-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service keycloak -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service donations-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service follows-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service mysql -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service nginx -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service srs -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S k3s kubectl delete pod,deployment,service service-registry -n default --ignore-not-found
           EOF
 
       - name: Convert and apply Kubernetes manifests
@@ -83,6 +83,7 @@ jobs:
 
             export $(grep -v '^#' variables.env | xargs)
           
+
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-frontend.yml -o k8s-frontend/
 
@@ -90,7 +91,7 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-backend.yml -o k8s-backend/
           
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml
- 
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/hls-data-pvc.yml -n default        
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/nginx-claim0-pvc.yml -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo k3s kubectl apply -f /home/${{ secrets.SSH_USER }}/nginx-claim1-pvc.yml -n default

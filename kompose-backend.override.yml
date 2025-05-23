@@ -4,49 +4,49 @@ services:
     ports:
       - "8078:8078"
     labels:
-      kompose.service.type: "LoadBalancer"
+      kompose.service.type: "NodePort"
       kompose.image-pull-secret: "ghcr-credentials"
 
   category-service:
     ports:
       - "8082:8082"
     labels:
-      kompose.service.type: "LoadBalancer"
+      kompose.service.type: "NodePort"
       kompose.image-pull-secret: "ghcr-credentials"
 
   service-registry:
     ports:
       - "8761:8761"
     labels:
-      kompose.service.type: "LoadBalancer"
+      kompose.service.type: "NodePort"
       kompose.image-pull-secret: "ghcr-credentials"
 
   user-service:
     ports:
       - "8081:8081"
     labels:
-      kompose.service.type: "LoadBalancer"
+      kompose.service.type: "NodePort"
       kompose.image-pull-secret: "ghcr-credentials"
 
   donations-service:
     ports:
       - "8084:8084"
     labels:
-      kompose.service.type: "LoadBalancer"
+      kompose.service.type: "NodePort"
       kompose.image-pull-secret: "ghcr-credentials"
 
   streaming-service:
     ports:
       - "8085:8085"
     labels:
-      kompose.service.type: "LoadBalancer"
+      kompose.service.type: "NodePort"
       kompose.image-pull-secret: "ghcr-credentials"
 
   follows-service:
     ports:
       - "8083:8083"
     labels:
-      kompose.service.type: "LoadBalancer"
+      kompose.service.type: "NodePort"
       kompose.image-pull-secret: "ghcr-credentials"
 
   keycloak:

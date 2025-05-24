@@ -49,8 +49,8 @@ services:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
 
-  keycloak:
-    ports:
-      - "8080:8080"
-    labels:
-      kompose.service.type: "ClusterIP"
+#  keycloak:
+#    ports:
+#      - "8080:8080"
+#    labels:
+#      kompose.service.type: "ClusterIP"

@@ -56,12 +56,10 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/pibbletv-ingress.yml frontend/kompose-frontend.override.yml frontend/nfs-storageclass.yml frontend/nfs-deployment.yml frontend/nfs-rbac.yml frontend/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
-          scp -o StrictHostKeyChecking=no -r ./certs ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/certs
 
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo microk8s kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/certs/local.pibbletv.com+1.pem --key=/home/${{ secrets.SSH_USER }}/certs/local.pibbletv.com+1-key.pem -n default --dry-run=client -o yaml | sudo microk8s kubectl apply -f -
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S microk8s kubectl delete pod,deployment,service api-gateway keycloak category-service donations-service follows-service mysql nginx service-registry srs streaming-service user-service -n default --ignore-not-found
           EOF
 

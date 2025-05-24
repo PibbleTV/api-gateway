@@ -37,11 +37,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(exchanges -> exchanges
 //                        .pathMatchers(HttpMethod.GET, "/category/getAll").permitAll()
-                        .pathMatchers(HttpMethod.PUT, "/category/addCategory").hasRole("admin")
+                        .pathMatchers(HttpMethod.PUT, "api/category/addCategory").hasRole("admin")
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
-//                        .jwt(Customizer.withDefaults())
                                 .jwt(jwt -> jwt
                                         .jwtAuthenticationConverter(jwtAuthenticationConverter())
                                 )
@@ -87,7 +86,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost"));
+        corsConfig.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost", "https://local.pibbletv.com"));
         corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "OPTIONS"));
         corsConfig.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept", "Authorization", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         corsConfig.setAllowCredentials(true);

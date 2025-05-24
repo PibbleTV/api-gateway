@@ -29,15 +29,13 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.1.4
     container_name: keycloak
-    command: start-dev --https-certificate-file=/opt/keycloak/certs/pibbletv.crt --https-certificate-key-file=/opt/keycloak/certs/pibbletv.key
+    command: start-dev
     environment:
       KEYCLOAK_FRONTEND_URL: "https://auth.pibbletv.com/auth"
       KEYCLOAK_ADMIN: admin1
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
     ports:
-      - "8443:8443"
-    volumes:
-      - /home/tanzerdx/certs:/opt/keycloak/certs
+      - "8080:8080"
     networks:
       - backend
 

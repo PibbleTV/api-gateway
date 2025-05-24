@@ -22,7 +22,7 @@ services:
       service-registry:
         condition: service_healthy
     volumes:
-      - /home/tanzerdx/certs:/app/certs
+      - /home/tanzerdx/certs:/opt/keycloak/certs
     networks:
       - backend
 
@@ -37,7 +37,7 @@ services:
     ports:
       - "8443:8443"
     volumes:
-      - /home/tanzerdx/certs:/app/certs
+      - /home/tanzerdx/certs:/opt/keycloak/certs
     networks:
       - backend
 

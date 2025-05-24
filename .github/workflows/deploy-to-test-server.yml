@@ -89,8 +89,6 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo microk8s kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-deployment.yml -n default
           
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo microk8s kubectl apply -f /home/${{ secrets.SSH_USER }}/hls-data-pvc.yml -n default        
-#            echo "${{ secrets.SUDO_PASSWORD }}" | sudo microk8s kubectl apply -f /home/${{ secrets.SSH_USER }}/nginx-claim0-pvc.yml -n default
-#            echo "${{ secrets.SUDO_PASSWORD }}" | sudo microk8s kubectl apply -f /home/${{ secrets.SSH_USER }}/nginx-claim1-pvc.yml -n default
             
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S microk8s kubectl apply -f k8s-frontend/ -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S microk8s kubectl apply -f k8s-backend/ -n default

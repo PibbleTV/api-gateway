@@ -51,6 +51,6 @@ services:
 
   keycloak:
     ports:
-      - "8080:8080"
+      - "8443:8443"
     labels:
       kompose.service.type: "ClusterIP"

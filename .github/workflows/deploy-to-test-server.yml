@@ -54,8 +54,12 @@ jobs:
 
       - name: Copy all files to VM
         run: |
+          echo "${{ secrets.TLS_CERT }}" | base64 -d > pibbletv-tls.crt
+          echo "${{ secrets.TLS_KEY }}" | base64 -d > pibbletv-tls.key
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/pibbletv-ingress.yml frontend/kompose-frontend.override.yml frontend/nfs-storageclass.yml frontend/nfs-deployment.yml frontend/nfs-rbac.yml frontend/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no pibbletv-tls.crt pibbletv-tls.key ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
+          echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S microk8s kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv-tls.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv-tls.key -n default
 
       - name: Delete all current Kubernetes pods
         run: |

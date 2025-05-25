@@ -34,8 +34,11 @@ services:
       KEYCLOAK_FRONTEND_URL: "https://auth.pibbletv.com/auth"
       KEYCLOAK_ADMIN: admin1
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      PROXY_ADDRESS_FORWARDING: "true"
+      KEYCLOAK_HTTPS_PORT: "8443"
+      KEYCLOAK_HTTP_ENABLED: "false"
     ports:
-      - "8080:8080"
+      - "8443:8443"
     networks:
       - backend
 

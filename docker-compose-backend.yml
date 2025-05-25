@@ -14,15 +14,13 @@ services:
       SPRING_SECURITY_USER_NAME: ${EUREKA_USERNAME}
       SPRING_SECURITY_USER_PASSWORD: ${EUREKA_PASSWORD}
       SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: ${KEYCLOAK_GATEWAY_URL}
-      KEYCLOAK_SSL_REQUIRED: external
+      KEYCLOAK_SSL_REQUIRED: "none"
       KEYCLOAK_PUBLIC_CLIENT: "false"
       SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED: "true"
       SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID: "true"
       SERVER_SSL_ENABLED: "true"
-      SERVER_SSL_KEY_STORE: file:/opt/keycloak/certs/keystore.p12
-      SERVER_SSL_KEY_STORE_PASSWORD: ${KEYSTORE_PASS}
-      SERVER_SSL_KEY_STORE_TYPE: PKCS12
-      SERVER_SSL_KEY_ALIAS: pibbletv
+      SERVER_SSL_CERTIFICATE: file:/opt/keycloak/certs/pibbletv.crt
+      SERVER_SSL_CERTIFICATE_PRIVATE_KEY: file:/opt/keycloak/certs/pibbletv.key
     depends_on:
       service-registry:
         condition: service_healthy
@@ -34,13 +32,12 @@ services:
   keycloak:
     image: quay.io/keycloak/keycloak:26.1.4
     container_name: keycloak
-    command: start-dev
+    command: start --https-certificate-file=/opt/keycloak/certs/pibbletv.crt --https-certificate-key-file=/opt/keycloak/certs/pibbletv.key --https-port=8443
     environment:
       KEYCLOAK_FRONTEND_URL: "http://auth.pibbletv.com/auth"
       KEYCLOAK_ADMIN: admin1
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
-      PROXY_ADDRESS_FORWARDING: "true"
-      KEYCLOAK_HTTP_ENABLED: "true"
+      KEYCLOAK_HTTP_ENABLED: "false"
       KEYCLOAK_HTTPS_PORT: "8443"
     ports:
       - "8443:8443"

@@ -18,6 +18,11 @@ services:
       KEYCLOAK_PUBLIC_CLIENT: "false"
       SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED: "true"
       SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID: "true"
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_KEY_STORE: file:/opt/keycloak/certs/keystore.p12
+      SERVER_SSL_KEY_STORE_PASSWORD: ${KEYSTORE_PASS}
+      SERVER_SSL_KEY_STORE_TYPE: PKCS12
+      SERVER_SSL_KEY_ALIAS: pibbletv
     depends_on:
       service-registry:
         condition: service_healthy
@@ -37,8 +42,14 @@ services:
       PROXY_ADDRESS_FORWARDING: "true"
       KEYCLOAK_HTTPS_PORT: "8443"
       KEYCLOAK_HTTP_ENABLED: "false"
+      KEYCLOAK_HTTPS_KEYSTORE_FILE: /opt/keycloak/certs/keystore.p12
+      KEYCLOAK_HTTPS_KEYSTORE_PASSWORD: ${KEYSTORE_PASS}
+      KEYCLOAK_HTTPS_KEYSTORE_TYPE: PKCS12
+      KEYCLOAK_HTTPS_KEY_ALIAS: pibbletv
     ports:
       - "8443:8443"
+    volumes:
+      - /home/tanzerdx/certs:/opt/keycloak/certs
     networks:
       - backend
 

@@ -36,16 +36,12 @@ services:
     container_name: keycloak
     command: start-dev
     environment:
-      KEYCLOAK_FRONTEND_URL: "https://auth.pibbletv.com/auth"
+      KEYCLOAK_FRONTEND_URL: "http://auth.pibbletv.com/auth"
       KEYCLOAK_ADMIN: admin1
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       PROXY_ADDRESS_FORWARDING: "true"
+      KEYCLOAK_HTTP_ENABLED: "true"
       KEYCLOAK_HTTPS_PORT: "8443"
-      KEYCLOAK_HTTP_ENABLED: "false"
-      KEYCLOAK_HTTPS_KEYSTORE_FILE: /opt/keycloak/certs/keystore.p12
-      KEYCLOAK_HTTPS_KEYSTORE_PASSWORD: ${KEYSTORE_PASS}
-      KEYCLOAK_HTTPS_KEYSTORE_TYPE: PKCS12
-      KEYCLOAK_HTTPS_KEY_ALIAS: pibbletv
     ports:
       - "8443:8443"
     volumes:

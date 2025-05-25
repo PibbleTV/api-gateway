@@ -6,6 +6,7 @@ services:
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 
   category-service:
     ports:

@@ -36,8 +36,7 @@ public class SecurityConfig {
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeExchange(exchanges -> exchanges
-//                        .pathMatchers(HttpMethod.GET, "/category/getAll").permitAll()
-                        .pathMatchers(HttpMethod.PUT, "api/category/addCategory").hasRole("admin")
+                        .pathMatchers(HttpMethod.GET, "api/category/getAll").hasRole("ROLE_admin")
                         .anyExchange().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
@@ -60,7 +59,6 @@ public class SecurityConfig {
         ReactiveJwtAuthenticationConverter converter = new ReactiveJwtAuthenticationConverter();
 
         converter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            // Log full claims
             System.out.println("JWT Claims: " + jwt.getClaims());
 
             Map<String, Object> realmAccess = jwt.getClaim("realm_access");

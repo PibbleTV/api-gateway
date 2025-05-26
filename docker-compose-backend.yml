@@ -19,9 +19,9 @@ services:
       KEYCLOAK_PUBLIC_CLIENT: "false"
       SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED: "true"
       SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID: "true"
-      SERVER_SSL_ENABLED: "true"
-      SERVER_SSL_CERTIFICATE: file:/opt/keycloak/certs/pibbletv.crt
-      SERVER_SSL_CERTIFICATE_PRIVATE_KEY: file:/opt/keycloak/certs/pibbletv.key
+#      SERVER_SSL_ENABLED: "true"
+#      SERVER_SSL_CERTIFICATE: file:/opt/keycloak/certs/pibbletv.crt
+#      SERVER_SSL_CERTIFICATE_PRIVATE_KEY: file:/opt/keycloak/certs/pibbletv.key
     depends_on:
       service-registry:
         condition: service_healthy

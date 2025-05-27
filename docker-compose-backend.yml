@@ -6,7 +6,7 @@ services:
     ports:
       - "8078:8078"
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryHehe123@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
       KEYCLOAK_AUTH_SERVER_URL: ${KEYCLOAK_URL}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM}
       KEYCLOAK_RESOURCE: ${KEYCLOAK_CLIENT_ID}

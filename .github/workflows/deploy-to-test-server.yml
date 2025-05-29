@@ -60,7 +60,7 @@ jobs:
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kubectl delete pod,deployment,service api-gateway category-service donations-service follows-service mysql nginx service-registry srs streaming-service user-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service api-gateway category-service donations-service follows-service mysql nginx service-registry srs streaming-service user-service -n default --ignore-not-found
           EOF
 
       - name: Convert and apply Kubernetes manifests

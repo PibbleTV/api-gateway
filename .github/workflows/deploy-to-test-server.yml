@@ -60,7 +60,7 @@ jobs:
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl delete pod,deployment,service api-gateway category-service donations-service follows-service mysql nginx service-registry srs streaming-service user-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kubectl delete pod,deployment,service api-gateway category-service donations-service follows-service mysql nginx service-registry srs streaming-service user-service -n default --ignore-not-found
           EOF
 
       - name: Convert and apply Kubernetes manifests
@@ -69,7 +69,7 @@ jobs:
             set -e
             cd /home/${{ secrets.SSH_USER }}
 
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
 
             export $(grep -v '^#' variables.env | xargs)
           
@@ -77,11 +77,11 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl delete pod -l app=nfs-subdir-external-provisioner -n default
           
 
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kompose convert -f merged-frontend.yml -o k8s-frontend/
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-frontend.yml -o k8s-frontend/
 
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kompose convert -f merged-backend.yml -o k8s-backend/
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-backend.yml -o k8s-backend/
           
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml
           
@@ -89,8 +89,8 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-deployment.yml -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/hls-data-pvc.yml -n default        
             
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f k8s-frontend/ -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f k8s-backend/ -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kubectl apply -f k8s-frontend/ -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kubectl apply -f k8s-backend/ -n default
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress-api.yml -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress-nginx.yml -n default

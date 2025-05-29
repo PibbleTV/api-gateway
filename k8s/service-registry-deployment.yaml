@@ -4,7 +4,7 @@ metadata:
   annotations:
     kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s/
     kompose.image-pull-secret: ghcr-credentials
-    kompose.service.type: LoadBalancer
+    kompose.service.type: ClusterIP
     kompose.version: 1.35.0 (9532ceef3)
   labels:
     io.kompose.service: service-registry
@@ -19,7 +19,7 @@ spec:
       annotations:
         kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s/
         kompose.image-pull-secret: ghcr-credentials
-        kompose.service.type: LoadBalancer
+        kompose.service.type: ClusterIP
         kompose.version: 1.35.0 (9532ceef3)
       labels:
         io.kompose.service: service-registry
@@ -31,9 +31,17 @@ spec:
             - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
               value: "false"
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://TanzerDx:serviceRegistryHehe123@service-registry:8761/eureka/
+              value: http://-:-@service-registry:8761/eureka/
             - name: EUREKA_INSTANCE_HOSTNAME
               value: service-registry
+            - name: EUREKA_SERVER_ENABLE_SELF_PRESERVATION
+              value: "true"
+            - name: LOGGING_LEVEL_COM_NETFLIX_DISCOVERY
+              value: DEBUG
+            - name: LOGGING_LEVEL_COM_NETFLIX_EUREKA
+              value: DEBUG
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS
+              value: TRACE
             - name: SERVER_PORT
               value: "8761"
             - name: SPRING_DATASOURCE_PASSWORD

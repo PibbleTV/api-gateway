@@ -48,8 +48,8 @@ jobs:
       - name: Delete old files
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo rm -f /home/${{ secrets.SSH_USER }}/*.yml /home/${{ secrets.SSH_USER }}/*.env
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo rm -rf /home/${{ secrets.SSH_USER }}/k8s-backend/* /home/${{ secrets.SSH_USER }}/k8s-frontend/*
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f /home/${{ secrets.SSH_USER }}/*.yml /home/${{ secrets.SSH_USER }}/*.env
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /home/${{ secrets.SSH_USER }}/k8s-backend/* /home/${{ secrets.SSH_USER }}/k8s-frontend/*
           EOF
 
       - name: Copy all files to VM
@@ -83,7 +83,7 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | kompose convert -f merged-backend.yml -o k8s-backend/
           
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo rm -f k8s-frontend/*-persistentvolumeclaim.yaml
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml
           
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-storageclass.yml -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-deployment.yml -n default

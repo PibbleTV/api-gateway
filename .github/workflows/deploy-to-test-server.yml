@@ -73,8 +73,8 @@ jobs:
 
             export $(grep -v '^#' variables.env | xargs)
           
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-rbac.yml -n default 
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl delete pod -l app=nfs-subdir-external-provisioner -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-rbac.yml -n default 
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod -l app=nfs-subdir-external-provisioner -n default
           
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
@@ -85,15 +85,15 @@ jobs:
           
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml
           
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-storageclass.yml -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-deployment.yml -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/hls-data-pvc.yml -n default        
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-storageclass.yml -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-deployment.yml -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/hls-data-pvc.yml -n default        
             
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kubectl apply -f k8s-frontend/ -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kubectl apply -f k8s-backend/ -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f k8s-frontend/ -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f k8s-backend/ -n default
 
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress-api.yml -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress-nginx.yml -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress-api.yml -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/ingress-nginx.yml -n default
           EOF
 
       - name: Cleanup SSH keys

@@ -4,8 +4,9 @@ metadata:
   annotations:
     kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s/
     kompose.image-pull-secret: ghcr-credentials
-    kompose.service.type: LoadBalancer
+    kompose.service.type: ClusterIP
     kompose.version: 1.35.0 (9532ceef3)
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
   labels:
     io.kompose.service: api-gateway
   name: api-gateway
@@ -14,24 +15,27 @@ spec:
   selector:
     matchLabels:
       io.kompose.service: api-gateway
+  strategy:
+    type: Recreate
   template:
     metadata:
       annotations:
         kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s/
         kompose.image-pull-secret: ghcr-credentials
-        kompose.service.type: LoadBalancer
+        kompose.service.type: ClusterIP
         kompose.version: 1.35.0 (9532ceef3)
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
       labels:
         io.kompose.service: api-gateway
     spec:
       containers:
         - env:
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://TanzerDx:serviceRegistryHehe123@service-registry:8761/eureka/
+              value: http://-:-@service-registry:8761/eureka/
             - name: KEYCLOAK_AUTH_SERVER_URL
-              value: http://keycloak:8080
+              value: https://auth.pibbletv.com/auth
             - name: KEYCLOAK_CREDENTIALS_SECRET
-              value: jIt5OvVLRYQ9iDzCGs3utUQVi5S9ogkT
+              value: -
             - name: KEYCLOAK_PUBLIC_CLIENT
               value: "false"
             - name: KEYCLOAK_REALM
@@ -40,21 +44,53 @@ spec:
               value: pibbletv-api
             - name: KEYCLOAK_SSL_REQUIRED
               value: external
+            - name: LOGGING_LEVEL_COM_NETFLIX_DISCOVERY
+              value: DEBUG
+            - name: LOGGING_LEVEL_COM_NETFLIX_EUREKA
+              value: DEBUG
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS
+              value: TRACE
+            - name: SERVER_PORT
+              value: "8078"
+            - name: SERVER_SSL_CERTIFICATE
+              value: file:/opt/keycloak/certs/pibbletv.crt
+            - name: SERVER_SSL_CERTIFICATE_PRIVATE_KEY
+              value: file:/opt/keycloak/certs/pibbletv.key
+            - name: SERVER_SSL_ENABLED
+              value: "true"
             - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
               value: "true"
             - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID
               value: "true"
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
-              value: http://auth.pibbletv.com/auth/realms/pibble-tv
+              value: https://auth.pibbletv.com/realms/pibble-tv
             - name: SPRING_SECURITY_USER_NAME
               value: TanzerDx
             - name: SPRING_SECURITY_USER_PASSWORD
               value: serviceRegistryHehe123
           image: ghcr.io/pibbletv/pibbletv-gateway:latest
+          livenessProbe:
+            exec:
+              command:
+                - curl
+                - -f
+                - -k
+                - https://localhost:8078/actuator/health
+            failureThreshold: 5
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
           name: api-gateway
           ports:
             - containerPort: 8078
               protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/keycloak/certs
+              name: api-gateway-claim0
       imagePullSecrets:
         - name: ghcr-credentials
       restartPolicy: Always
+      volumes:
+        - name: api-gateway-claim0
+          persistentVolumeClaim:
+            claimName: api-gateway-claim0

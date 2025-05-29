@@ -4,7 +4,7 @@ metadata:
   annotations:
     kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s/
     kompose.image-pull-secret: ghcr-credentials
-    kompose.service.type: LoadBalancer
+    kompose.service.type: ClusterIP
     kompose.version: 1.35.0 (9532ceef3)
   labels:
     io.kompose.service: donations-service
@@ -19,14 +19,14 @@ spec:
       annotations:
         kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s/
         kompose.image-pull-secret: ghcr-credentials
-        kompose.service.type: LoadBalancer
+        kompose.service.type: ClusterIP
         kompose.version: 1.35.0 (9532ceef3)
       labels:
         io.kompose.service: donations-service
     spec:
       containers:
         - env:
-            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+            - name: EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE
               value: http://TanzerDx:serviceRegistryHehe123@service-registry:8761/eureka/
             - name: EUREKA_INSTANCE_HOSTNAME
               value: donations-service

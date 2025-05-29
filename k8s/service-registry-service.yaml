@@ -4,16 +4,16 @@ metadata:
   annotations:
     kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s/
     kompose.image-pull-secret: ghcr-credentials
-    kompose.service.type: LoadBalancer
+    kompose.service.type: ClusterIP
     kompose.version: 1.35.0 (9532ceef3)
   labels:
-    io.kompose.service: category-service-tcp
-  name: category-service-tcp
+    io.kompose.service: service-registry
+  name: service-registry
 spec:
   ports:
-    - name: "8082"
-      port: 8082
-      targetPort: 8082
+    - name: "8761"
+      port: 8761
+      targetPort: 8761
   selector:
-    io.kompose.service: category-service
-  type: LoadBalancer
+    io.kompose.service: service-registry
+  type: ClusterIP

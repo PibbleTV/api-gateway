@@ -65,9 +65,9 @@ spec:
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
               value: https://auth.pibbletv.com/realms/pibble-tv
             - name: SPRING_SECURITY_USER_NAME
-              value: TanzerDx
+              value: -
             - name: SPRING_SECURITY_USER_PASSWORD
-              value: serviceRegistryHehe123
+              value: -
           image: ghcr.io/pibbletv/pibbletv-gateway:latest
           livenessProbe:
             exec:

@@ -73,10 +73,8 @@ jobs:
 
             export $(grep -v '^#' variables.env | xargs)
           
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-rbac.yml -n default 
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service -l app=nfs-subdir-external-provisioner -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployments,replicasets -l app=nfs-subdir-external-provisioner -n default
           
-
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-frontend.yml -o k8s-frontend/
 

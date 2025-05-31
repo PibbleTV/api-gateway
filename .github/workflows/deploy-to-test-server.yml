@@ -73,7 +73,13 @@ jobs:
 
             export $(grep -v '^#' variables.env | xargs)
           
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployments,replicasets -l app=nfs-subdir-external-provisioner -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc hls-data -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc server-storage -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod nfs-server -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete svc nfs-service -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pv nfs-pv
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete deployment nfs-server -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete replicaset nfs-server -n default --ignore-not-found
           
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose -f docker-compose-frontend.yml -f kompose-frontend.override.yml config > merged-frontend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-frontend.yml -o k8s-frontend/

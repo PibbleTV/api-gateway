@@ -74,8 +74,8 @@ jobs:
             export $(grep -v '^#' variables.env | xargs)
           
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc hls-data -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc server-storage -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod nfs-server -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc server-storage -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete svc nfs-service -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pv nfs-pv --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete deployment nfs-server -n default --ignore-not-found

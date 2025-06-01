@@ -76,6 +76,7 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc hls-data -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod nfs-server -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc server-storage -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete svc nfs-service -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pv nfs-pv --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete deployment nfs-server -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete replicaset nfs-server -n default --ignore-not-found
@@ -89,7 +90,8 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml
           
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-pvc.yml -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-server-pod.yml -n default    
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-server-pod.yml -n default
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-service.yml -n default        
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/nfs-pv.yml -n default        
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/hls-data-pvc.yml -n default 
             

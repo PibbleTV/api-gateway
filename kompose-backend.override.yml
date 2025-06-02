@@ -57,10 +57,7 @@ services:
       - prometheus_data:/prometheus
     labels:
       kompose.service.type: "LoadBalancer"
-      kompose.volume.type: "configMap"
-      kompose.volume.configMap.name: "prometheus-config"
-      kompose.volume.configMap.items[0].key: "prometheus.yml"
-      kompose.volume.configMap.items[0].path: "/etc/prometheus/prometheus.yml"
+      kompose.config-map.volume: "prometheus-config:/etc/prometheus"
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --storage.tsdb.path=/prometheus

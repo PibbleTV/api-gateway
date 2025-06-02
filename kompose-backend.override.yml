@@ -53,8 +53,17 @@ services:
   prometheus:
     ports:
       - "9090:9090"
+    volumes:
+      - prometheus_data:/prometheus
     labels:
       kompose.service.type: "LoadBalancer"
+      kompose.volume.type: "configMap"
+      kompose.volume.configMap.name: "prometheus-config"
+      kompose.volume.configMap.items[0].key: "prometheus.yml"
+      kompose.volume.configMap.items[0].path: "/etc/prometheus/prometheus.yml"
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
 
   node-exporter:
     ports:

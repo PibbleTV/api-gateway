@@ -40,7 +40,7 @@ services:
     networks:
       - backend
 
-  node_exporter:
+  node-exporter:
     image: prom/node-exporter:latest
     ports:
       - "9100:9100"
@@ -247,4 +247,4 @@ volumes:
 
 configs:
   prometheus_config:
-    file: ./prometheus.yml
+    file: prometheus.yml

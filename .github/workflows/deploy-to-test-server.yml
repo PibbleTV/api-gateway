@@ -54,7 +54,7 @@ jobs:
 
       - name: Copy all files to VM
         run: |
-          scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no docker-compose-backend.yml monitoring/prometheus.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/ingress-auth.yml frontend/ingress-nginx.yml frontend/ingress-api.yml frontend/kompose-frontend.override.yml frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
 
       - name: Delete all current Kubernetes pods

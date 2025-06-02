@@ -40,6 +40,26 @@ services:
     networks:
       - backend
 
+  node_exporter:
+    image: prom/node-exporter:latest
+    command:
+      - "--path.rootfs=/host"
+    pid: host
+    volumes:
+      - "/:/host:ro"
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
+    volumes:
+      - prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+
 #  keycloak:
 #    image: quay.io/keycloak/keycloak:26.1.4
 #    container_name: keycloak
@@ -221,3 +241,8 @@ networks:
 
 volumes:
   mysql_data:
+  prometheus_data:
+
+configs:
+  prometheus_config:
+    file: ./prometheus.yml

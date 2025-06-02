@@ -50,6 +50,12 @@ services:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
 
+  prometheus:
+    ports:
+      - "9090:9090"
+    labels:
+      kompose.service.type: "LoadBalancer"
+
 #  keycloak:
 #    ports:
 #      - "8443:8443"

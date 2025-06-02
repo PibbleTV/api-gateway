@@ -56,7 +56,6 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml prometheus.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/docker-compose-frontend.yml frontend/ingress-auth.yml frontend/ingress-nginx.yml frontend/ingress-api.yml frontend/kompose-frontend.override.yml frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
-          echo "${{ secrets.SUDO_PASSWORD }}" | kubectl create configmap prometheus-config --from-file=/home/${{ secrets.SSH_USER }}/prometheus.yml -n default
 
       - name: Delete all current Kubernetes pods
         run: |
@@ -73,6 +72,8 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
 
             export $(grep -v '^#' variables.env | xargs)
+          
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl create configmap prometheus-config --from-file=prometheus.yml -n default
 
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc hls-data -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod nfs-server -n default --ignore-not-found

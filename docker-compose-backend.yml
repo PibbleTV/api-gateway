@@ -42,6 +42,8 @@ services:
 
   node_exporter:
     image: prom/node-exporter:latest
+    ports:
+      - "9100:9100"
     command:
       - "--path.rootfs=/host"
     pid: host

@@ -56,6 +56,12 @@ services:
     labels:
       kompose.service.type: "LoadBalancer"
 
+  node_exporter:
+    ports:
+      - "9100:9100"
+    labels:
+      kompose.service.type: "ClusterIP"
+
 #  keycloak:
 #    ports:
 #      - "8443:8443"

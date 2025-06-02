@@ -40,25 +40,25 @@ services:
     networks:
       - backend
 
-  node-exporter:
-    image: prom/node-exporter:latest
-    ports:
-      - "9100:9100"
-    command:
-      - "--path.rootfs=/host"
-    pid: host
-    volumes:
-      - "/:/host:ro"
+#  node-exporter:
+#    image: prom/node-exporter:latest
+#    ports:
+#      - "9100:9100"
+#    command:
+#      - "--path.rootfs=/host"
+#    pid: host
+#    volumes:
+#      - "/:/host:ro"
 
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - "9090:9090"
-    volumes:
-      - prometheus_data:/prometheus
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
+#  prometheus:
+#    image: prom/prometheus:latest
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - prometheus_data:/prometheus
+#    command:
+#      - --config.file=/etc/prometheus/prometheus.yml
+#      - --storage.tsdb.path=/prometheus
 
 #  keycloak:
 #    image: quay.io/keycloak/keycloak:26.1.4
@@ -241,4 +241,4 @@ networks:
 
 volumes:
   mysql_data:
-  prometheus_data:
+#  prometheus_data:

@@ -50,23 +50,23 @@ services:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
 
-  prometheus:
-    ports:
-      - "9090:9090"
-    volumes:
-      - prometheus_data:/prometheus
-    labels:
-      kompose.service.type: "LoadBalancer"
-      kompose.config-map.volume: "prometheus-config:/etc/prometheus"
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-      - --storage.tsdb.path=/prometheus
-
-  node-exporter:
-    ports:
-      - "9100:9100"
-    labels:
-      kompose.service.type: "ClusterIP"
+#  prometheus:
+#    ports:
+#      - "9090:9090"
+#    volumes:
+#      - prometheus_data:/prometheus
+#    labels:
+#      kompose.service.type: "LoadBalancer"
+#      kompose.config-map.volume: "prometheus-config:/etc/prometheus"
+#    command:
+#      - --config.file=/etc/prometheus/prometheus.yml
+#      - --storage.tsdb.path=/prometheus
+#
+#  node-exporter:
+#    ports:
+#      - "9100:9100"
+#    labels:
+#      kompose.service.type: "ClusterIP"
 
 #  keycloak:
 #    ports:

@@ -72,8 +72,6 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
 
             export $(grep -v '^#' variables.env | xargs)
-          
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl create configmap prometheus-config --from-file=prometheus.yml -n default
 
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pvc hls-data -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod nfs-server -n default --ignore-not-found

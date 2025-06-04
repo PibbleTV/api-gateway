@@ -1,5 +1,49 @@
 services:
 
+  api-gateway:
+    image: ghcr.io/pibbletv/pibbletv-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8078:8078"
+    environment:
+
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
+      EUREKA_INSTANCE_HOSTNAME: api-gateway
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      EUREKA_INSTANCE_APPNAME: API-GATEWAY
+      SPRING_APPLICATION_NAME: api-gateway
+      KEYCLOAK_AUTH_SERVER_URL: ${KEYCLOAK_URL}
+      KEYCLOAK_REALM: ${KEYCLOAK_REALM}
+      KEYCLOAK_RESOURCE: ${KEYCLOAK_CLIENT_ID}
+      KEYCLOAK_CREDENTIALS_SECRET: ${KEYCLOAK_CLIENT_SECRET}
+      SPRING_SECURITY_USER_NAME: ${EUREKA_USERNAME}
+      SPRING_SECURITY_USER_PASSWORD: ${EUREKA_PASSWORD}
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: ${KEYCLOAK_GATEWAY_URL}
+      KEYCLOAK_SSL_REQUIRED: external
+      SERVER_PORT: "8078"
+      KEYCLOAK_PUBLIC_CLIENT: "false"
+      SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED: "true"
+      SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID: "true"
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS: TRACE
+      LOGGING_LEVEL_COM_NETFLIX_DISCOVERY: DEBUG
+      LOGGING_LEVEL_COM_NETFLIX_EUREKA: DEBUG
+      SERVER_SSL_ENABLED: "true"
+      SERVER_SSL_CERTIFICATE: file:/opt/keycloak/certs/pibbletv.crt
+      SERVER_SSL_CERTIFICATE_PRIVATE_KEY: file:/opt/keycloak/certs/pibbletv.key
+    depends_on:
+      service-registry:
+        condition: service_healthy
+    volumes:
+      - /home/tanzerdx/certs:/opt/keycloak/certs
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "-k", "https://localhost:8078/actuator/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - backend
+
   keycloak:
     image: quay.io/keycloak/keycloak:26.1.4
     container_name: keycloak
@@ -50,6 +94,31 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+  service-registry:
+    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
+    container_name: service-registry
+    command: ["java", "-Deureka.client.service-url.defaultZone=http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/", "-jar", "/app.jar"]
+    ports:
+      - "8761:8761"
+    environment:
+      SERVER_PORT: "8761"
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
+      EUREKA_INSTANCE_HOSTNAME: service-registry
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      EUREKA_SERVER_PEER_NODE_URL: http://service-registry:8761/eureka/
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+      EUREKA_SERVER_ENABLE_SELF_PRESERVATION: "true"
+      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS: TRACE
+      LOGGING_LEVEL_COM_NETFLIX_DISCOVERY: DEBUG
+      LOGGING_LEVEL_COM_NETFLIX_EUREKA: DEBUG
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_SECURITY_USER_NAME: ${EUREKA_USERNAME}
+      SPRING_SECURITY_USER_PASSWORD: ${EUREKA_PASSWORD}
+    networks:
+      - backend
+
   user-service:
     image: ghcr.io/pibbletv/pibbletv-user-service:latest
     container_name: user-service
@@ -64,8 +133,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-#      service-registry:
-#        condition: service_healthy
+      service-registry:
+        condition: service_healthy
     networks:
       - backend
 
@@ -83,8 +152,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-#      service-registry:
-#        condition: service_healthy
+      service-registry:
+        condition: service_healthy
     networks:
       - backend
 
@@ -102,8 +171,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-#      service-registry:
-#        condition: service_healthy
+      service-registry:
+        condition: service_healthy
     networks:
       - backend
 
@@ -124,8 +193,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-#      service-registry:
-#        condition: service_healthy
+      service-registry:
+        condition: service_healthy
     networks:
       - backend
 
@@ -143,8 +212,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
-#      service-registry:
-#        condition: service_healthy
+      service-registry:
+        condition: service_healthy
     networks:
       - backend
 

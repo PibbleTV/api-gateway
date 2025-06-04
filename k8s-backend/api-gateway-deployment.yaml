@@ -35,15 +35,19 @@ spec:
             - name: EUREKA_INSTANCE_APPNAME
               value: API-GATEWAY
             - name: EUREKA_INSTANCE_HOSTNAME
-              value: api-gateway
-            - name: EUREKA_INSTANCE_KUBERNETES_ENABLED
-              value: "true"
-            - name: EUREKA_INSTANCE_KUBERNETES_NAMESPACE
-              value: default
-            - name: EUREKA_INSTANCE_KUBERNETES_SERVICE_NAME
-              value: api-gateway
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
-              value: "false"
+              value: "true"
+            - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
+              value: "true"
+            - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID
+              value: "true"
+            - name: SPRING_SECURITY_USER_NAME
+              value: TanzerDx
+            - name: SPRING_SECURITY_USER_PASSWORD
+              value: serviceRegistryChangedPass784056
             - name: KEYCLOAK_AUTH_SERVER_URL
               value: https://auth.pibbletv.com/auth
             - name: KEYCLOAK_CREDENTIALS_SECRET
@@ -72,16 +76,8 @@ spec:
               value: "true"
             - name: SPRING_APPLICATION_NAME
               value: api-gateway
-            - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED
-              value: "true"
-            - name: SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID
-              value: "true"
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
               value: https://auth.pibbletv.com/realms/pibble-tv
-            - name: SPRING_SECURITY_USER_NAME
-              value: TanzerDx
-            - name: SPRING_SECURITY_USER_PASSWORD
-              value: serviceRegistryChangedPass784056
           image: ghcr.io/pibbletv/pibbletv-gateway:latest
           livenessProbe:
             exec:

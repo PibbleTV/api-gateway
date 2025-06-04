@@ -1,19 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s-backend/
-    kompose.image-pull-secret: ghcr-credentials
-    kompose.service.type: ClusterIP
-    kompose.version: 1.35.0 (9532ceef3)
-  labels:
-    io.kompose.service: service-registry
   name: service-registry
+  namespace: pibbletv
+  labels:
+    app: service-registry
 spec:
   ports:
-    - name: "8761"
+    - name: eureka
       port: 8761
       targetPort: 8761
   selector:
-    io.kompose.service: service-registry
+    app: service-registry
   type: ClusterIP

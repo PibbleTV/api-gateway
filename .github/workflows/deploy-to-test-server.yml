@@ -54,6 +54,11 @@ jobs:
 
       - name: Copy all files to VM
         run: |
+          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /home/${{ secrets.SSH_USER }}/k8s-backend /home/${{ secrets.SSH_USER }}/frontend /home/${{ secrets.SSH_USER }}/misc
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S chown -R ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} /home/${{ secrets.SSH_USER }}/k8s-backend /home/${{ secrets.SSH_USER }}/frontend /home/${{ secrets.SSH_USER }}/misc
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S chmod -R u+rwX /home/${{ secrets.SSH_USER }}/k8s-backend /home/${{ secrets.SSH_USER }}/frontend /home/${{ secrets.SSH_USER }}/misc
+          EOF
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml monitoring/prometheus.yml monitoring/prometheus-deployment.yml monitoring/prometheus-service.yml monitoring/node-exporter-daemonset.yml monitoring/node-exporter-service.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/k8s-frontend/srs-udp-service.yaml frontend/k8s-frontend/srs-tcp-service.yaml frontend/k8s-frontend/srs-deployment.yaml frontend/k8s-frontend/nginx-service.yaml frontend/k8s-frontend/nginx-deployment.yaml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/frontend
           scp -o StrictHostKeyChecking=no frontend/ingress-auth.yml frontend/ingress-nginx.yml frontend/ingress-api.yml frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/misc

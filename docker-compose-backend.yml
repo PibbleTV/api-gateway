@@ -96,13 +96,43 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
+#  service-registry:
+#    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
+#    command: ["java",
+#              "-Deureka.instance.hostname=service-registry",
+#              "-Deureka.client.serviceUrl.defaultZone=http://${EUREKA_USERNAME}:${EUREKA_PASSWORD}@service-registry:8761/eureka/",
+#              "-Deureka.server.peerNodeUrl=http://service-registry:8761/eureka/",
+#              "-jar", "/app.jar"]
+#    environment:
+#      EUREKA_INSTANCE_HOSTNAME: service-registry
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://${EUREKA_USERNAME}:${EUREKA_PASSWORD}@service-registry:8761/eureka/
+#      EUREKA_SERVER_PEER_NODE_URL: http://service-registry:8761/eureka/
+#      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+#      EUREKA_SERVER_ENABLE_SELF_PRESERVATION: "true"
+#      EUREKA_SERVER_EVICTION_INTERVAL_TIMER_IN_MS: "5000"
+#      EUREKA_INSTANCE_KUBERNETES_SERVICE_NAME: service-registry
+#      EUREKA_INSTANCE_KUBERNETES_NAMESPACE: default
+#      EUREKA_INSTANCE_KUBERNETES_ENABLED: "true"
+#      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS: TRACE
+#      LOGGING_LEVEL_COM_NETFLIX_DISCOVERY: DEBUG
+#      LOGGING_LEVEL_COM_NETFLIX_EUREKA: DEBUG
+#      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+#      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+#      SPRING_SECURITY_USER_NAME: ${EUREKA_USERNAME}
+#      SPRING_SECURITY_USER_PASSWORD: ${EUREKA_PASSWORD}
+#    networks:
+#      - backend
+#    healthcheck:
+#      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 5
+
   service-registry:
-    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
-    command: ["java",
-              "-Deureka.instance.hostname=service-registry",
-              "-Deureka.client.serviceUrl.defaultZone=http://${EUREKA_USERNAME}:${EUREKA_PASSWORD}@service-registry:8761/eureka/",
-              "-Deureka.server.peerNodeUrl=http://service-registry:8761/eureka/",
-              "-jar", "/app.jar"]
+    image: springcloud/eureka
+    container_name: service-registry
+    ports:
+      - "8761:8761"
     environment:
       EUREKA_INSTANCE_HOSTNAME: service-registry
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://${EUREKA_USERNAME}:${EUREKA_PASSWORD}@service-registry:8761/eureka/
@@ -120,10 +150,8 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
       SPRING_SECURITY_USER_NAME: ${EUREKA_USERNAME}
       SPRING_SECURITY_USER_PASSWORD: ${EUREKA_PASSWORD}
-    networks:
-      - backend
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 5

@@ -26,17 +26,11 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://$(SPRING_SECURITY_USER_NAME):$(SPRING_SECURITY_USER_PASSWORD)@service-registry:8761/eureka/
+              value: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
             - name: SPRING_SECURITY_USER_NAME
-              valueFrom:
-                secretKeyRef:
-                  name: eureka-credentials
-                  key: username
+              value: TanzerDx
             - name: SPRING_SECURITY_USER_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: eureka-credentials
-                  key: password
+              value: serviceRegistryChangedPass784056
             - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
               value: "false"
             - name: EUREKA_CLIENT_FETCH_REGISTRY

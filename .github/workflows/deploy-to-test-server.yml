@@ -67,7 +67,7 @@ jobs:
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service api-gateway category-service donations-service keycloak follows-service mysql nginx-tcp nginx service-registry srs srs-tcp srs-udp streaming-service user-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service api-gateway category-service donations-service follows-service mysql nginx-tcp nginx service-registry srs srs-tcp srs-udp streaming-service user-service -n default --ignore-not-found
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service prometheus prometheus-service node-exporter -n monitoring --ignore-not-found
           EOF
 
@@ -103,6 +103,9 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/nfs-service.yml -n default        
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/nfs-pv.yml -n default        
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/hls-data-pvc.yml -n default 
+          
+            echo "${{ secrets.TLS_CERT_PEM }}" | sudo tee /opt/keycloak/certs/pibbletv.crt > /dev/null
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S chmod 644 /opt/keycloak/certs/pibbletv.crt
             
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/frontend -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f k8s-backend/ -n default

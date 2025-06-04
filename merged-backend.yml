@@ -10,9 +10,6 @@ services:
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
       EUREKA_INSTANCE_APPNAME: API-GATEWAY
       EUREKA_INSTANCE_HOSTNAME: api-gateway
-      EUREKA_INSTANCE_KUBERNETES_ENABLED: "true"
-      EUREKA_INSTANCE_KUBERNETES_NAMESPACE: default
-      EUREKA_INSTANCE_KUBERNETES_SERVICE_NAME: api-gateway
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
       KEYCLOAK_AUTH_SERVER_URL: https://auth.pibbletv.com/auth
       KEYCLOAK_CREDENTIALS_SECRET: jIt5OvVLRYQ9iDzCGs3utUQVi5S9ogkT
@@ -222,20 +219,24 @@ services:
         target: /var/lib/mysql
         volume: {}
   service-registry:
+    command:
+      - java
+      - -Deureka.client.service-url.defaultZone=http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      - -jar
+      - /app.jar
     container_name: service-registry
     environment:
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
       EUREKA_INSTANCE_HOSTNAME: service-registry
-      EUREKA_INSTANCE_KUBERNETES_ENABLED: "true"
-      EUREKA_INSTANCE_KUBERNETES_NAMESPACE: default
-      EUREKA_INSTANCE_KUBERNETES_SERVICE_NAME: service-registry
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
       EUREKA_SERVER_ENABLE_SELF_PRESERVATION: "true"
-      EUREKA_SERVER_EVICTION_INTERVAL_TIMER_IN_MS: "5000"
       EUREKA_SERVER_PEER_NODE_URL: http://service-registry:8761/eureka/
       LOGGING_LEVEL_COM_NETFLIX_DISCOVERY: DEBUG
       LOGGING_LEVEL_COM_NETFLIX_EUREKA: DEBUG
       LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS: TRACE
+      SERVER_PORT: "8761"
       SPRING_DATASOURCE_PASSWORD: Debgubakmo5
       SPRING_DATASOURCE_USERNAME: root
       SPRING_SECURITY_USER_NAME: TanzerDx
@@ -249,12 +250,12 @@ services:
       timeout: 10s
       interval: 30s
       retries: 5
-    image: springcloud/eureka
+    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
     labels:
       kompose.image-pull-secret: ghcr-credentials
       kompose.service.type: ClusterIP
     networks:
-      default: null
+      backend: null
     ports:
       - mode: ingress
         target: 8761
@@ -316,8 +317,6 @@ networks:
   backend:
     name: api-gateway_backend
     driver: bridge
-  default:
-    name: api-gateway_default
 volumes:
   mysql_data:
     name: api-gateway_mysql_data

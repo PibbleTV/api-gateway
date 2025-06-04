@@ -3,12 +3,15 @@ services:
   api-gateway:
     image: ghcr.io/pibbletv/pibbletv-gateway:latest
     container_name: api-gateway
-    command: ["java", "-Deureka.client.service-url.defaultZone=http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/", "-jar", "/app.jar"]
     ports:
       - "8078:8078"
     environment:
 
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
+      EUREKA_INSTANCE_HOSTNAME: api-gateway
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      EUREKA_INSTANCE_APPNAME: API-GATEWAY
+      SPRING_APPLICATION_NAME: api-gateway
       KEYCLOAK_AUTH_SERVER_URL: ${KEYCLOAK_URL}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM}
       KEYCLOAK_RESOURCE: ${KEYCLOAK_CLIENT_ID}
@@ -101,6 +104,8 @@ services:
       SERVER_PORT: "8761"
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
       EUREKA_INSTANCE_HOSTNAME: service-registry
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      EUREKA_SERVER_PEER_NODE_URL: http://service-registry:8761/eureka/
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
       EUREKA_CLIENT_FETCH_REGISTRY: "false"
       EUREKA_SERVER_ENABLE_SELF_PRESERVATION: "true"

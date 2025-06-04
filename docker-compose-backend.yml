@@ -3,6 +3,7 @@ services:
   api-gateway:
     image: ghcr.io/pibbletv/pibbletv-gateway:latest
     container_name: api-gateway
+    command: ["java", "-Deureka.client.service-url.defaultZone=http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/", "-jar", "/app.jar"]
     ports:
       - "8078:8078"
     environment:
@@ -93,6 +94,7 @@ services:
   service-registry:
     image: ghcr.io/pibbletv/pibbletv-service-registry:latest
     container_name: service-registry
+    command: ["java", "-Deureka.client.service-url.defaultZone=http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/", "-jar", "/app.jar"]
     ports:
       - "8761:8761"
     environment:

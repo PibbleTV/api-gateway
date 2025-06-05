@@ -1,65 +1,71 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: service-registry
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s-backend/
+    kompose.image-pull-secret: ghcr-credentials
+    kompose.service.type: ClusterIP
+    kompose.version: 1.35.0 (9532ceef3)
   labels:
-    app: service-registry
+    io.kompose.service: service-registry
+  name: service-registry
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: service-registry
+      io.kompose.service: service-registry
   template:
     metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s-backend/
+        kompose.image-pull-secret: ghcr-credentials
+        kompose.service.type: ClusterIP
+        kompose.version: 1.35.0 (9532ceef3)
       labels:
-        app: service-registry
+        io.kompose.service: service-registry
     spec:
       containers:
-        - name: service-registry
-          image: ghcr.io/pibbletv/pibbletv-service-registry:latest
-          ports:
-            - containerPort: 8761
-              protocol: TCP
+        - args:
+            - java
+            - -Deureka.client.service-url.defaultZone=http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+            - -jar
+            - /app.jar
           env:
-            - name: EUREKA_INSTANCE_HOSTNAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
-            - name: SPRING_SECURITY_USER_NAME
-              value: TanzerDx
-            - name: SPRING_SECURITY_USER_PASSWORD
-              value: serviceRegistryChangedPass784056
+            - name: EUREKA_CLIENT_FETCH_REGISTRY
+              value: "false"
             - name: EUREKA_CLIENT_REGISTER_WITH_EUREKA
               value: "false"
-            - name: EUREKA_CLIENT_FETCH_REGISTRY
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
+            - name: EUREKA_INSTANCE_HOSTNAME
+              value: service-registry
+            - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
               value: "false"
             - name: EUREKA_SERVER_ENABLE_SELF_PRESERVATION
               value: "true"
-            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS
-              value: TRACE
+            - name: EUREKA_SERVER_PEER_NODE_URL
+              value: http://service-registry:8761/eureka/
             - name: LOGGING_LEVEL_COM_NETFLIX_DISCOVERY
               value: DEBUG
             - name: LOGGING_LEVEL_COM_NETFLIX_EUREKA
               value: DEBUG
+            - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS
+              value: TRACE
             - name: SERVER_PORT
               value: "8761"
-          readinessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8761
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 10
-            failureThreshold: 5
-          livenessProbe:
-            httpGet:
-              path: /actuator/health
-              port: 8761
-            initialDelaySeconds: 60
-            periodSeconds: 30
-            timeoutSeconds: 10
-            failureThreshold: 5
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: Debgubakmo5
+            - name: SPRING_DATASOURCE_USERNAME
+              value: root
+            - name: SPRING_SECURITY_USER_NAME
+              value: TanzerDx
+            - name: SPRING_SECURITY_USER_PASSWORD
+              value: serviceRegistryChangedPass784056
+          image: ghcr.io/pibbletv/pibbletv-service-registry:latest
+          name: service-registry
+          ports:
+            - containerPort: 8761
+              protocol: TCP
       imagePullSecrets:
         - name: ghcr-credentials
+      restartPolicy: Always

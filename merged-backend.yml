@@ -7,7 +7,7 @@ services:
         condition: service_healthy
         required: true
     environment:
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
       EUREKA_INSTANCE_APPNAME: API-GATEWAY
       EUREKA_INSTANCE_HOSTNAME: api-gateway
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
@@ -69,7 +69,7 @@ services:
         condition: service_healthy
         required: true
     environment:
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
       EUREKA_INSTANCE_HOSTNAME: category-service
       SPRING_PROFILES_ACTIVE: dev
       SPRING_R2DBC_PASSWORD: Debgubakmo5
@@ -98,11 +98,13 @@ services:
         condition: service_healthy
         required: true
     environment:
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
       EUREKA_INSTANCE_HOSTNAME: donations-service
       SPRING_R2DBC_PASSWORD: Debgubakmo5
       SPRING_R2DBC_URL: r2dbc:mysql://mysql_db/donations_service
       SPRING_R2DBC_USERNAME: root
+      SPRING_SECURITY_USER_NAME: TanzerDx
+      SPRING_SECURITY_USER_PASSWORD: serviceRegistryChangedPass784056
     image: ghcr.io/pibbletv/pibbletv-donations-service:latest
     labels:
       kompose.image-pull-secret: ghcr-credentials
@@ -124,11 +126,13 @@ services:
         condition: service_healthy
         required: true
     environment:
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
       EUREKA_INSTANCE_HOSTNAME: follows-service
       SPRING_R2DBC_PASSWORD: Debgubakmo5
       SPRING_R2DBC_URL: r2dbc:mysql://mysql_db/follows_service
       SPRING_R2DBC_USERNAME: root
+      SPRING_SECURITY_USER_NAME: TanzerDx
+      SPRING_SECURITY_USER_PASSWORD: serviceRegistryChangedPass784056
     image: ghcr.io/pibbletv/pibbletv-follows-service:latest
     labels:
       kompose.image-pull-secret: ghcr-credentials
@@ -228,7 +232,7 @@ services:
     environment:
       EUREKA_CLIENT_FETCH_REGISTRY: "false"
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
       EUREKA_INSTANCE_HOSTNAME: service-registry
       EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
       EUREKA_SERVER_ENABLE_SELF_PRESERVATION: "true"
@@ -241,15 +245,6 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_SECURITY_USER_NAME: TanzerDx
       SPRING_SECURITY_USER_PASSWORD: serviceRegistryChangedPass784056
-    healthcheck:
-      test:
-        - CMD
-        - curl
-        - -f
-        - http://localhost:8761/actuator/health
-      timeout: 10s
-      interval: 30s
-      retries: 5
     image: ghcr.io/pibbletv/pibbletv-service-registry:latest
     labels:
       kompose.image-pull-secret: ghcr-credentials
@@ -271,11 +266,13 @@ services:
         condition: service_healthy
         required: true
     environment:
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
       EUREKA_INSTANCE_HOSTNAME: streaming-service
       SPRING_R2DBC_PASSWORD: Debgubakmo5
       SPRING_R2DBC_URL: r2dbc:mysql://mysql_db/streaming_service
       SPRING_R2DBC_USERNAME: root
+      SPRING_SECURITY_USER_NAME: TanzerDx
+      SPRING_SECURITY_USER_PASSWORD: serviceRegistryChangedPass784056
     image: ghcr.io/pibbletv/pibbletv-streaming-service:latest
     labels:
       kompose.image-pull-secret: ghcr-credentials
@@ -297,11 +294,13 @@ services:
         condition: service_healthy
         required: true
     environment:
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka/
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
       EUREKA_INSTANCE_HOSTNAME: user-service
       SPRING_R2DBC_PASSWORD: Debgubakmo5
       SPRING_R2DBC_URL: r2dbc:mysql://mysql_db/user_service
       SPRING_R2DBC_USERNAME: root
+      SPRING_SECURITY_USER_NAME: TanzerDx
+      SPRING_SECURITY_USER_PASSWORD: serviceRegistryChangedPass784056
     image: ghcr.io/pibbletv/pibbletv-user-service:latest
     labels:
       kompose.image-pull-secret: ghcr-credentials

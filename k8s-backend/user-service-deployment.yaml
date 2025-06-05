@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s-backend/
+    kompose.image-pull-secret: ghcr-credentials
+    kompose.service.type: ClusterIP
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: user-service
+  name: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: user-service
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\ProgramData\chocolatey\lib\kubernetes-kompose\tools\kompose.exe convert -f merged-backend.yml -o k8s-backend/
+        kompose.image-pull-secret: ghcr-credentials
+        kompose.service.type: ClusterIP
+        kompose.version: 1.35.0 (9532ceef3)
+      labels:
+        io.kompose.service: user-service
+    spec:
+      containers:
+        - env:
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: http://TanzerDx:serviceRegistryChangedPass784056@service-registry:8761/eureka
+            - name: EUREKA_INSTANCE_HOSTNAME
+              value: user-service
+            - name: SPRING_R2DBC_PASSWORD
+              value: Debgubakmo5
+            - name: SPRING_R2DBC_URL
+              value: r2dbc:mysql://mysql_db/user_service
+            - name: SPRING_R2DBC_USERNAME
+              value: root
+            - name: SPRING_SECURITY_USER_NAME
+              value: TanzerDx
+            - name: SPRING_SECURITY_USER_PASSWORD
+              value: serviceRegistryChangedPass784056
+          image: ghcr.io/pibbletv/pibbletv-user-service:latest
+          name: user-service
+          ports:
+            - containerPort: 8081
+              protocol: TCP
+      imagePullSecrets:
+        - name: ghcr-credentials
+      restartPolicy: Always

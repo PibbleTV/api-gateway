@@ -6,8 +6,6 @@ services:
     ports:
       - "8078:8078"
     environment:
-
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
       SPRING_APPLICATION_NAME: api-gateway
       KEYCLOAK_AUTH_SERVER_URL: ${KEYCLOAK_URL}
       KEYCLOAK_REALM: ${KEYCLOAK_REALM}
@@ -17,11 +15,6 @@ services:
       KEYCLOAK_SSL_REQUIRED: external
       SERVER_PORT: "8078"
       KEYCLOAK_PUBLIC_CLIENT: "false"
-      SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_ENABLED: "true"
-      SPRING_CLOUD_GATEWAY_DISCOVERY_LOCATOR_LOWERCASE_SERVICE_ID: "true"
-      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS: TRACE
-      LOGGING_LEVEL_COM_NETFLIX_DISCOVERY: DEBUG
-      LOGGING_LEVEL_COM_NETFLIX_EUREKA: DEBUG
       SERVER_SSL_ENABLED: "true"
       SERVER_SSL_CERTIFICATE: file:/opt/keycloak/certs/pibbletv.crt
       SERVER_SSL_CERTIFICATE_PRIVATE_KEY: file:/opt/keycloak/certs/pibbletv.key
@@ -88,29 +81,29 @@ services:
       retries: 10
     volumes:
       - mysql_data:/var/lib/mysql
-
-  service-registry:
-    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
-    container_name: service-registry
-    command: ["java", "-Deureka.client.service-url.defaultZone=http://service-registry:8761/eureka", "-jar", "/app.jar"]
-    ports:
-      - "8761:8761"
-    environment:
-      SERVER_PORT: "8761"
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
-      EUREKA_INSTANCE_HOSTNAME: service-registry
-      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
-      EUREKA_SERVER_PEER_NODE_URL: http://service-registry:8761/eureka
-      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
-      EUREKA_CLIENT_FETCH_REGISTRY: "false"
-      EUREKA_SERVER_ENABLE_SELF_PRESERVATION: "true"
-      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS: TRACE
-      LOGGING_LEVEL_COM_NETFLIX_DISCOVERY: DEBUG
-      LOGGING_LEVEL_COM_NETFLIX_EUREKA: DEBUG
-      SPRING_DATASOURCE_USERNAME: ${DB_USER}
-      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
-    networks:
-      - backend
+#
+#  service-registry:
+#    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
+#    container_name: service-registry
+#    command: ["java", "-Deureka.client.service-url.defaultZone=http://service-registry:8761/eureka", "-jar", "/app.jar"]
+#    ports:
+#      - "8761:8761"
+#    environment:
+#      SERVER_PORT: "8761"
+#      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
+#      EUREKA_INSTANCE_HOSTNAME: service-registry
+#      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+#      EUREKA_SERVER_PEER_NODE_URL: http://service-registry:8761/eureka
+#      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+#      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+#      EUREKA_SERVER_ENABLE_SELF_PRESERVATION: "true"
+#      LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_CLOUD_COMMONS_UTIL_INETUTILS: TRACE
+#      LOGGING_LEVEL_COM_NETFLIX_DISCOVERY: DEBUG
+#      LOGGING_LEVEL_COM_NETFLIX_EUREKA: DEBUG
+#      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+#      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+#    networks:
+#      - backend
 
   user-service:
     image: ghcr.io/pibbletv/pibbletv-user-service:latest
@@ -121,8 +114,6 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_USER_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
-      EUREKA_INSTANCE_HOSTNAME: user-service
     depends_on:
       mysql:
         condition: service_healthy
@@ -140,8 +131,6 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_DONATIONS_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
-      EUREKA_INSTANCE_HOSTNAME: donations-service
     depends_on:
       mysql:
         condition: service_healthy
@@ -159,8 +148,6 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_STREAMING_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
-      EUREKA_INSTANCE_HOSTNAME: streaming-service
     depends_on:
       mysql:
         condition: service_healthy
@@ -179,8 +166,6 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_CATEGORY_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
-      EUREKA_INSTANCE_HOSTNAME: category-service
     depends_on:
       mysql:
         condition: service_healthy
@@ -198,8 +183,6 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_FOLLOWS_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
-      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: ${EUREKA_URL}
-      EUREKA_INSTANCE_HOSTNAME: follows-service
     depends_on:
       mysql:
         condition: service_healthy

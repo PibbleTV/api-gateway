@@ -61,9 +61,21 @@ jobs:
       - name: Create TLS secret
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S bash -c 'echo "${{ secrets.TLS_CERT }}" > /home/${{ secrets.SSH_USER }}/pibbletv.crt'
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S bash -c 'echo "${{ secrets.TLS_KEY }}" > /home/${{ secrets.SSH_USER }}/pibbletv.key'
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv.key -n default --dry-run=client -o yaml | kubectl apply -f -
+          set -ex
+
+          echo "${{ secrets.TLS_CERT }}" > /home/${{ secrets.SSH_USER }}/pibbletv.crt
+          echo "${{ secrets.TLS_KEY }}" > /home/${{ secrets.SSH_USER }}/pibbletv.key
+
+          openssl x509 -in /home/${{ secrets.SSH_USER }}/pibbletv.crt -text -noout
+          openssl rsa -in /home/${{ secrets.SSH_USER }}/pibbletv.key -check
+
+          kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv.key -n default --dry-run=client -o yaml > /home/${{ secrets.SSH_USER }}/secret.yaml
+          cat /home/${{ secrets.SSH_USER }}/secret.yaml
+          kubectl apply -f /home/${{ secrets.SSH_USER }}/secret.yaml
+
+          kubectl get secret pibbletv-tls -n default
+
+          rm -f /home/${{ secrets.SSH_USER }}/pibbletv.crt /home/${{ secrets.SSH_USER }}/pibbletv.key /home/${{ secrets.SSH_USER }}/secret.yaml
           EOF
 
       - name: Delete all current Kubernetes pods

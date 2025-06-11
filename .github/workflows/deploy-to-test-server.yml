@@ -39,7 +39,7 @@ jobs:
           chmod 700 ~/.ssh
           install -m 600 -D /dev/null ~/.ssh/id_rsa
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          ssh-keyscan -T 20 -H 100.121.76.9 > ~/.ssh/known_hosts || echo "ssh-keyscan failed"
+          ssh-keyscan -T 20 -H 100.121.76.9 >> ~/.ssh/known_hosts || echo "ssh-keyscan failed"
 
       - name: Recreate variables.env
         run: |
@@ -57,6 +57,15 @@ jobs:
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml monitoring/prometheus.yml monitoring/node-exporter-daemonset.yml monitoring/node-exporter-service.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/k8s-frontend/srs-udp-service.yaml frontend/k8s-frontend/srs-tcp-service.yaml frontend/k8s-frontend/srs-deployment.yaml frontend/k8s-frontend/nginx-service.yaml frontend/k8s-frontend/nginx-deployment.yaml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/frontend
           scp -o StrictHostKeyChecking=no frontend/ingress-auth.yml frontend/ingress-nginx.yml frontend/ingress-api.yml frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/misc
+
+      - name: Create TLS secret
+        run: |
+          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S bash -c 'echo "${{ secrets.TLS_CERT }}" > /home/${{ secrets.SSH_USER }}/pibbletv.crt'
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S bash -c 'echo "${{ secrets.TLS_KEY }}" > /home/${{ secrets.SSH_USER }}/pibbletv.key'
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv.key -n default --dry-run=client -o yaml | kubectl apply -f -
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f /home/${{ secrets.SSH_USER }}/pibbletv.crt /home/${{ secrets.SSH_USER }}/pibbletv.key
+          EOF
 
       - name: Delete all current Kubernetes pods
         run: |
@@ -81,7 +90,7 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f node-exporter-daemonset.yaml -f node-exporter-service.yaml -n monitoring
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml
-            
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/frontend -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f k8s-backend/ -n default
 

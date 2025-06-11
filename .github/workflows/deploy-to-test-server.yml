@@ -54,35 +54,14 @@ jobs:
 
       - name: Copy all files to VM
         run: |
-          scp -o StrictHostKeyChecking=no docker-compose-backend.yml monitoring/prometheus.yml monitoring/node-exporter-daemonset.yml monitoring/node-exporter-service.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
+          scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/k8s-frontend/srs-udp-service.yaml frontend/k8s-frontend/srs-tcp-service.yaml frontend/k8s-frontend/srs-deployment.yaml frontend/k8s-frontend/nginx-service.yaml frontend/k8s-frontend/nginx-deployment.yaml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/frontend
           scp -o StrictHostKeyChecking=no frontend/ingress-auth.yml frontend/ingress-nginx.yml frontend/ingress-api.yml frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/misc
-
-      - name: Create TLS secret
-        run: |
-          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-          set -ex
-
-          echo "${{ secrets.TLS_CERT }}" > /home/${{ secrets.SSH_USER }}/pibbletv.crt
-          echo "${{ secrets.TLS_KEY }}" > /home/${{ secrets.SSH_USER }}/pibbletv.key
-
-          sudo openssl x509 -in /home/${{ secrets.SSH_USER }}/pibbletv.crt -text -noout
-          sudo openssl rsa -in /home/${{ secrets.SSH_USER }}/pibbletv.key -check
-
-          sudo kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv.key -n default --dry-run=client -o yaml > /home/${{ secrets.SSH_USER }}/secret.yaml
-          sudo cat /home/${{ secrets.SSH_USER }}/secret.yaml
-          sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/secret.yaml
-
-          sudo kubectl get secret pibbletv-tls -n default
-
-          rm -f /home/${{ secrets.SSH_USER }}/pibbletv.crt /home/${{ secrets.SSH_USER }}/pibbletv.key /home/${{ secrets.SSH_USER }}/secret.yaml
-          EOF
 
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service api-gateway category-service donations-service follows-service nginx-tcp nginx srs srs-tcp srs-udp service-registry streaming-service user-service -n default --ignore-not-found
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service node-exporter -n monitoring --ignore-not-found
           EOF
 
       - name: Convert and apply Kubernetes manifests
@@ -97,9 +76,7 @@ jobs:
 
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-backend.yml -o k8s-backend/
-          
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f node-exporter-daemonset.yaml -f node-exporter-service.yaml -n monitoring
-
+        
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml
           
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/frontend -n default

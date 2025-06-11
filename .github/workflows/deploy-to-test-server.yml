@@ -63,17 +63,17 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
           set -ex
 
-          echo "${{ secrets.TLS_CERT }}" > /home/${{ secrets.SSH_USER }}/pibbletv.crt
-          echo "${{ secrets.TLS_KEY }}" > /home/${{ secrets.SSH_USER }}/pibbletv.key
+          echo "${{ secrets.TLS_CERT }}" > sudo /home/${{ secrets.SSH_USER }}/pibbletv.crt
+          echo "${{ secrets.TLS_KEY }}" > sudo /home/${{ secrets.SSH_USER }}/pibbletv.key
 
-          openssl x509 -in /home/${{ secrets.SSH_USER }}/pibbletv.crt -text -noout
-          openssl rsa -in /home/${{ secrets.SSH_USER }}/pibbletv.key -check
+          sudo openssl x509 -in /home/${{ secrets.SSH_USER }}/pibbletv.crt -text -noout
+          sudo openssl rsa -in /home/${{ secrets.SSH_USER }}/pibbletv.key -check
 
-          kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv.key -n default --dry-run=client -o yaml > /home/${{ secrets.SSH_USER }}/secret.yaml
-          cat /home/${{ secrets.SSH_USER }}/secret.yaml
-          kubectl apply -f /home/${{ secrets.SSH_USER }}/secret.yaml
+          sudo kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv.key -n default --dry-run=client -o yaml > /home/${{ secrets.SSH_USER }}/secret.yaml
+          sudo cat /home/${{ secrets.SSH_USER }}/secret.yaml
+          sudo kubectl apply -f /home/${{ secrets.SSH_USER }}/secret.yaml
 
-          kubectl get secret pibbletv-tls -n default
+          sudo kubectl get secret pibbletv-tls -n default
 
           rm -f /home/${{ secrets.SSH_USER }}/pibbletv.crt /home/${{ secrets.SSH_USER }}/pibbletv.key /home/${{ secrets.SSH_USER }}/secret.yaml
           EOF

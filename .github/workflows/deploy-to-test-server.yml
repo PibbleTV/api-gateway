@@ -63,8 +63,8 @@ jobs:
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
           set -ex
 
-          echo "${{ secrets.TLS_CERT }}" > sudo /home/${{ secrets.SSH_USER }}/pibbletv.crt
-          echo "${{ secrets.TLS_KEY }}" > sudo /home/${{ secrets.SSH_USER }}/pibbletv.key
+          echo "${{ secrets.TLS_CERT }}" > /home/${{ secrets.SSH_USER }}/pibbletv.crt
+          echo "${{ secrets.TLS_KEY }}" > /home/${{ secrets.SSH_USER }}/pibbletv.key
 
           sudo openssl x509 -in /home/${{ secrets.SSH_USER }}/pibbletv.crt -text -noout
           sudo openssl rsa -in /home/${{ secrets.SSH_USER }}/pibbletv.key -check

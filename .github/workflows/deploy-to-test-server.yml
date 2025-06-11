@@ -64,7 +64,6 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S bash -c 'echo "${{ secrets.TLS_CERT }}" > /home/${{ secrets.SSH_USER }}/pibbletv.crt'
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S bash -c 'echo "${{ secrets.TLS_KEY }}" > /home/${{ secrets.SSH_USER }}/pibbletv.key'
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl create secret tls pibbletv-tls --cert=/home/${{ secrets.SSH_USER }}/pibbletv.crt --key=/home/${{ secrets.SSH_USER }}/pibbletv.key -n default --dry-run=client -o yaml | kubectl apply -f -
-            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f /home/${{ secrets.SSH_USER }}/pibbletv.crt /home/${{ secrets.SSH_USER }}/pibbletv.key
           EOF
 
       - name: Delete all current Kubernetes pods

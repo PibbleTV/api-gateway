@@ -83,7 +83,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost", "https://local.pibbletv.com"));
+        corsConfig.setAllowedOrigins(List.of("http://localhost:5173", "http://localhost", "https://app.24.144.77.108.nip.io"));
         corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "OPTIONS"));
         corsConfig.setAllowedHeaders(List.of("Origin", "Content-Type", "Accept", "Authorization", "Access-Control-Request-Method", "Access-Control-Request-Headers"));
         corsConfig.setAllowCredentials(true);

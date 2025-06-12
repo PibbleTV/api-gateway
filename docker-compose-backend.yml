@@ -40,11 +40,11 @@ services:
       - --hostname=auth.pibbletv.com
       - --hostname-strict=false
     environment:
-      KEYCLOAK_FRONTEND_URL: "https://auth.pibbletv.com/auth"
+      KEYCLOAK_FRONTEND_URL: "https://auth.24.144.77.108.nip.io"
       KEYCLOAK_ADMIN: admin1
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_HTTPS_PORT: "8443"
-      KC_HOSTNAME: auth.pibbletv.com
+      KC_HOSTNAME: auth.24.144.77.108.nip.io
       KC_HOSTNAME_STRICT: "false"
       KC_LOG_LEVEL: debug
     ports:

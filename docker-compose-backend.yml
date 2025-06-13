@@ -18,6 +18,8 @@ services:
       SERVER_SSL_ENABLED: "true"
       SERVER_SSL_CERTIFICATE: file:/opt/keycloak/certs/pibbletv.crt
       SERVER_SSL_CERTIFICATE_PRIVATE_KEY: file:/opt/keycloak/certs/pibbletv.key
+      MANAGEMENT_ENDPOINT_WEB_EXPOSURE_INCLUDE: health
+      MANAGEMENT.ENDPOINT.HEALTH.ENABLED: true
     volumes:
       - /home/tanzerdx/certs:/opt/keycloak/certs
     healthcheck:

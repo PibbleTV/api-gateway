@@ -20,12 +20,6 @@ services:
       SERVER_SSL_CERTIFICATE_PRIVATE_KEY: file:/opt/keycloak/certs/pibbletv.key
     volumes:
       - /home/tanzerdx/certs:/opt/keycloak/certs
-    healthcheck:
-      test: [ "CMD", "curl", "-f", "-k", "https://localhost:8078/actuator/health" ]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
     networks:
       - backend
 

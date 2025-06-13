@@ -44,6 +44,7 @@ jobs:
       - name: Recreate variables.env
         run: |
           echo "${{ secrets.BACKEND_ENV_FILE }}" > variables.env
+          
 
       - name: Delete old files
         run: |

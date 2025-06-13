@@ -56,7 +56,7 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}
           scp -o StrictHostKeyChecking=no frontend/k8s-frontend/srs-udp-service.yaml frontend/k8s-frontend/srs-tcp-service.yaml frontend/k8s-frontend/srs-deployment.yaml frontend/k8s-frontend/nginx-service.yaml frontend/k8s-frontend/nginx-deployment.yaml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/frontend
-          scp -o StrictHostKeyChecking=no frontend/ingress-auth.yml frontend/ingress-nginx.yml frontend/ingress-api.yml frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/misc
+          scp -o StrictHostKeyChecking=no frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/misc
 
       - name: Delete all current Kubernetes pods
         run: |
@@ -82,9 +82,6 @@ jobs:
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/frontend -n default
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f k8s-backend/ -n default
 
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-api.yml -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-auth.yml -n default
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-nginx.yml -n default
           EOF
 
       - name: Cleanup SSH keys

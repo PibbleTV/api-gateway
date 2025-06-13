@@ -1,8 +1,5 @@
 FROM openjdk:17-alpine
 
-
-RUN apk add --no-cache curl
-
 # Set the working directory inside the container
 WORKDIR /app
 

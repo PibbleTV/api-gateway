@@ -111,6 +111,7 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_USER_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     depends_on:
       mysql:
         condition: service_healthy
@@ -126,6 +127,7 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_DONATIONS_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     depends_on:
       mysql:
         condition: service_healthy
@@ -141,6 +143,7 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_STREAMING_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     depends_on:
       mysql:
         condition: service_healthy
@@ -157,6 +160,7 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_CATEGORY_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     depends_on:
       mysql:
         condition: service_healthy
@@ -172,6 +176,7 @@ services:
       SPRING_R2DBC_URL: ${R2DBC_CONNECTION_FOLLOWS_SERVICE}
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
     depends_on:
       mysql:
         condition: service_healthy

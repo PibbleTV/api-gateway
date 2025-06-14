@@ -15,9 +15,9 @@ services:
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
-      kompose.service.annotation.prometheus.io/scrape: "true"
-      kompose.service.annotation.prometheus.io/port: "8082"
-      kompose.service.annotation.prometheus.io/path: "/actuator/prometheus"
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8082"
+      prometheus.io/path: "/actuator/prometheus"
 
 #  service-registry:
 #    ports:
@@ -32,9 +32,9 @@ services:
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
-      kompose.service.annotation.prometheus.io/scrape: "true"
-      kompose.service.annotation.prometheus.io/port: "8081"
-      kompose.service.annotation.prometheus.io/path: "/actuator/prometheus"
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8081"
+      prometheus.io/path: "/actuator/prometheus"
 
   donations-service:
     ports:
@@ -42,9 +42,9 @@ services:
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
-      kompose.service.annotation.prometheus.io/scrape: "true"
-      kompose.service.annotation.prometheus.io/port: "8084"
-      kompose.service.annotation.prometheus.io/path: "/actuator/prometheus"
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8084"
+      prometheus.io/path: "/actuator/prometheus"
 
   streaming-service:
     ports:
@@ -52,9 +52,9 @@ services:
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
-      kompose.service.annotation.prometheus.io/scrape: "true"
-      kompose.service.annotation.prometheus.io/port: "8085"
-      kompose.service.annotation.prometheus.io/path: "/actuator/prometheus"
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8085"
+      prometheus.io/path: "/actuator/prometheus"
 
   follows-service:
     ports:
@@ -62,9 +62,9 @@ services:
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
-      kompose.service.annotation.prometheus.io/scrape: "true"
-      kompose.service.annotation.prometheus.io/port: "8083"
-      kompose.service.annotation.prometheus.io/path: "/actuator/prometheus"
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8083"
+      prometheus.io/path: "/actuator/prometheus"
 
 #  keycloak:
 #    ports:

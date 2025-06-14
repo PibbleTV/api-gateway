@@ -17,7 +17,7 @@ services:
       kompose.image-pull-secret: "ghcr-credentials"
       prometheus.io/scrape: "true"
       prometheus.io/port: "8082"
-      prometheus.io/path: "/metrics"
+      prometheus.io/path: "/actuator/prometheus"
 
 #  service-registry:
 #    ports:
@@ -34,7 +34,7 @@ services:
       kompose.image-pull-secret: "ghcr-credentials"
       prometheus.io/scrape: "true"
       prometheus.io/port: "8081"
-      prometheus.io/path: "/metrics"
+      prometheus.io/path: "/actuator/prometheus"
 
   donations-service:
     ports:
@@ -44,7 +44,7 @@ services:
       kompose.image-pull-secret: "ghcr-credentials"
       prometheus.io/scrape: "true"
       prometheus.io/port: "8084"
-      prometheus.io/path: "/metrics"
+      prometheus.io/path: "/actuator/prometheus"
 
   streaming-service:
     ports:
@@ -54,7 +54,7 @@ services:
       kompose.image-pull-secret: "ghcr-credentials"
       prometheus.io/scrape: "true"
       prometheus.io/port: "8085"
-      prometheus.io/path: "/metrics"
+      prometheus.io/path: "/actuator/prometheus"
 
   follows-service:
     ports:
@@ -64,7 +64,7 @@ services:
       kompose.image-pull-secret: "ghcr-credentials"
       prometheus.io/scrape: "true"
       prometheus.io/port: "8083"
-      prometheus.io/path: "/metrics"
+      prometheus.io/path: "/actuator/prometheus"
 
 #  keycloak:
 #    ports:

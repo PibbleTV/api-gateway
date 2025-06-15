@@ -60,25 +60,6 @@ services:
 #    networks:
 #      - backend
 
-  mysql:
-    image: mysql:8
-    container_name: mysql_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-    ports:
-      - "3306:3306"
-    networks:
-      - backend
-    healthcheck:
-      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "${DB_USER}", "-p${MYSQL_ROOT_PASSWORD}" ]
-      interval: 5s
-      timeout: 10s
-      retries: 10
-    volumes:
-      - mysql-data:/var/lib/mysql
-#
 #  service-registry:
 #    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
 #    container_name: service-registry
@@ -187,7 +168,5 @@ networks:
   backend:
     driver: bridge
 
-volumes:
-  mysql-data:
 
 

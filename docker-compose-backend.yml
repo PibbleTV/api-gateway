@@ -77,7 +77,7 @@ services:
       timeout: 10s
       retries: 10
     volumes:
-      - mysql_data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
 #
 #  service-registry:
 #    image: ghcr.io/pibbletv/pibbletv-service-registry:latest
@@ -188,6 +188,6 @@ networks:
     driver: bridge
 
 volumes:
-  mysql_data:
+  mysql-data:
 
 

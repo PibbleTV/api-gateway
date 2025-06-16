@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.5'
     id 'io.spring.dependency-management' version '1.1.7'
+    id "io.sentry.jvm.gradle" version "5.7.0"
 }
 
 group = 'com.pibbletv'
@@ -23,6 +24,7 @@ ext {
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+    implementation 'io.sentry:sentry-spring-boot-starter:8.12.0'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.projectlombok:lombok:1.18.38'
@@ -42,6 +44,13 @@ dependencies {
         exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-el'
         exclude group: 'org.apache.tomcat.embed', module: 'tomcat-embed-websocket'
     }
+}
+
+sentry {
+    includeSourceContext = true
+    org = "pibbletv"
+    projectName = "api-gateway"
+    authToken = "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"
 }
 
 

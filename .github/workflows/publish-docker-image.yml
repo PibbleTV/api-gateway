@@ -43,3 +43,8 @@ jobs:
       - name: Test pulling image from GHCR
         run: |
           docker pull ghcr.io/pibbletv/pibbletv-gateway:latest
+
+      - name: Initialize release pipeline
+        run: gh workflow run "deploy-to-test-server.yml" --repo PibbleTV/api-gateway --json
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

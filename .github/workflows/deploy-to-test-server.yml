@@ -9,8 +9,7 @@ jobs:
     permissions:
       contents: read
       packages: read
-
-      steps:
+    steps:
       - uses: actions/checkout@v3
       - name: Install Sentry CLI
         run: curl -sL https://sentry.io/get-cli/ | bash
@@ -54,11 +53,12 @@ jobs:
         run: |
           sentry-cli send-event -m "Frontend repo checked out" -l info
 
-      - name: Set up JDK
+      - name: Run Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: "temurin"
           java-version: "17"
+      - name: Log JDK Setup
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: pibbletv
@@ -166,7 +166,6 @@ jobs:
             exit 0
           EOF
           sentry-cli send-event -m "Kubernetes manifests applied successfully" -l info
-          
 
       - name: Notify Deployment Success
         env:

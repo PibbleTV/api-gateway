@@ -10,15 +10,16 @@ jobs:
       contents: read
       packages: read
 
-    steps:
+      steps:
       - uses: actions/checkout@v3
       - name: Install Sentry CLI
         run: curl -sL https://sentry.io/get-cli/ | bash
 
-      - name: Tailscale
+      - name: Run Tailscale
         uses: tailscale/github-action@v3
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+      - name: Log Tailscale Connection
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: pibbletv
@@ -27,8 +28,9 @@ jobs:
         run: |
           sentry-cli send-event -m "Tailscale connection initiated" -l info
 
-      - name: Checkout backend repo
+      - name: Run Checkout Backend Repo
         uses: actions/checkout@v3
+      - name: Log Backend Repo Checkout
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: pibbletv
@@ -37,12 +39,13 @@ jobs:
         run: |
           sentry-cli send-event -m "Backend repo checked out" -l info
 
-      - name: Checkout frontend repo
+      - name: Run Checkout Frontend Repo
         uses: actions/checkout@v3
         with:
           repository: PibbleTV/react-app
           token: ${{ secrets.GH_TOKEN }}
           path: frontend
+      - name: Log Frontend Repo Checkout
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: pibbletv

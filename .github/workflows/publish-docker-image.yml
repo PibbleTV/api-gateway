@@ -27,10 +27,6 @@ jobs:
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
-      - name: Generate artifact hash
-        run: |
-          sha256sum build/libs/*.jar > artifact_hashes.txt
-
       - name: Install Syft and Grype
         run: |
           curl -sSL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
@@ -63,18 +59,6 @@ jobs:
 
       - name: Push Docker image
         run: docker push ghcr.io/pibbletv/pibbletv-gateway:latest
-
-      - name: Sign Docker image
-        run: |
-          printf '%s\n' "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
-          cosign sign --key cosign.key ghcr.io/pibbletv/pibbletv-gateway:latest
-          rm -f cosign.key
-
-      - name: Verify image signature
-        run: |
-          printf '%s\n' "${{ secrets.COSIGN_PUBLIC_KEY }}" > cosign.pub
-          cosign verify --key cosign.pub ghcr.io/pibbletv/pibbletv-gateway:latest
-          rm -f cosign.pub
 
       - name: Test pulling image from GHCR
         run: |

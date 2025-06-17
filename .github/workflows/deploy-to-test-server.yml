@@ -94,33 +94,36 @@ jobs:
 
       - name: Convert and apply Kubernetes manifests
         run: |
-          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
+          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << 'EOF'
             set -e
             cd /home/${{ secrets.SSH_USER }}
-
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
-
+          
             export $(grep -v '^#' variables.env | xargs)
-
+            export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} # Pass Sentry token
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/prometheus-rbac.yml || { sentry-cli send-event -m "Failed to apply prometheus-rbac.yml" -l error; exit 1; }
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/prometheus.yml || { sentry-cli send-event -m "Failed to apply prometheus.yml" -l error; exit 1; }
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod -n monitoring -l app=prometheus-server --ignore-not-found || { sentry-cli send-event -m "Failed to delete Prometheus pod" -l error; exit 1; }
-
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker compose --env-file variables.env -f docker-compose-backend.yml -f kompose-backend.override.yml config > merged-backend.yml || { sentry-cli send-event -m "Failed to merge docker-compose files" -l error; exit 1; }
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S kompose convert -f merged-backend.yml -o k8s-backend/ || { sentry-cli send-event -m "Failed to convert docker-compose to Kubernetes manifests" -l error; exit 1; }
-
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml || { sentry-cli send-event -m "Failed to delete frontend PVCs" -l error; exit 1; }
-
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/frontend -n default || { sentry-cli send-event -m "Failed to apply frontend manifests" -l error; exit 1; }
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/mysql -n default || { sentry-cli send-event -m "Failed to apply MySQL manifests" -l error; exit 1; }
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f k8s-backend/ -n default || { sentry-cli send-event -m "Failed to apply backend manifests" -l error; exit 1; }
-
+          
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-api.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-api.yml" -l error; exit 1; }
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-auth.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-auth.yml" -l error; exit 1; }
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-nginx.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-nginx.yml" -l error; exit 1; }      
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-nginx.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-nginx.yml" -l error; exit 1; }
             exit 0
           EOF
           sentry-cli send-event -m "Kubernetes manifests applied successfully" -l info
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Notify Deployment Success
         run: |

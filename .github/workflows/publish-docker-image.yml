@@ -64,15 +64,15 @@ jobs:
 
       - name: Sign Docker image
         run: |
-          echo "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
+          printf '%s\n' "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
           cosign sign --key cosign.key ghcr.io/pibbletv/pibbletv-gateway:latest
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+          rm -f cosign.key
 
       - name: Verify image signature
         run: |
-          echo "${{ secrets.COSIGN_PUBLIC_KEY }}" > cosign.pub
+          printf '%s\n' "${{ secrets.COSIGN_PUBLIC_KEY }}" > cosign.pub
           cosign verify --key cosign.pub ghcr.io/pibbletv/pibbletv-gateway:latest
+          rm -f cosign.pub
 
       - name: Push Docker image to GHCR
         run: |

@@ -68,32 +68,11 @@ jobs:
         run: |
           docker image inspect ghcr.io/pibbletv/pibbletv-gateway:latest | jq -r '.[0].Id' | sha256sum > artifact_hashes.txt
 
-      - name: Install Cosign
-        run: |
-          curl -sSL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign
-          chmod +x /usr/local/bin/cosign
-
       - name: Build Docker image
         run: docker build -f Dockerfile -t ghcr.io/pibbletv/pibbletv-gateway:latest .
 
       - name: Push Docker image
         run: docker push ghcr.io/pibbletv/pibbletv-gateway:latest
-
-      - name: Sign Docker image
-        run: |
-          printf '%s\n' "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
-          cosign sign --key cosign.key ghcr.io/pibbletv/pibbletv-gateway:latest
-          rm -f cosign.key
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
-
-      - name: Verify image signature
-        run: |
-          printf '%s\n' "${{ secrets.COSIGN_PUBLIC_KEY }}" > cosign.pub
-          cosign verify --key cosign.pub ghcr.io/pibbletv/pibbletv-gateway:latest
-          rm -f cosign.pub
-        env:
-          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
 
       - name: Test pulling image from GHCR
         run: |

@@ -1,8 +1,10 @@
+
 plugins {
     id 'java'
     id 'org.springframework.boot' version '3.4.5'
     id 'io.spring.dependency-management' version '1.1.7'
     id "io.sentry.jvm.gradle" version "5.7.0"
+    id 'com.github.node-gradle.node' version '7.0.2'
 }
 
 group = 'com.pibbletv'
@@ -31,6 +33,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.slf4j:slf4j-api'
     testImplementation 'io.projectreactor:reactor-test'
@@ -50,7 +53,8 @@ sentry {
     includeSourceContext = true
     org = "pibbletv"
     projectName = "api-gateway"
-    authToken = "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"
+    authToken = System.getenv('SENTRY_AUTH_TOKEN')
+    // New secret because I accidentally leaked the old one :(
 }
 
 

@@ -6,6 +6,12 @@ jobs:
   deploy:
     name: Deploy docker-compose to test server
     runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: pibbletv
+      SENTRY_PROJECT: api-gateway
+      SENTRY_ENVIRONMENT: test
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
     permissions:
       contents: read
       packages: read
@@ -19,22 +25,12 @@ jobs:
         with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
       - name: Log Tailscale Connection
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           sentry-cli send-event -m "Tailscale connection initiated" -l info
 
       - name: Run Checkout Backend Repo
         uses: actions/checkout@v3
       - name: Log Backend Repo Checkout
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           sentry-cli send-event -m "Backend repo checked out" -l info
 
@@ -45,11 +41,6 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
           path: frontend
       - name: Log Frontend Repo Checkout
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           sentry-cli send-event -m "Frontend repo checked out" -l info
 
@@ -59,20 +50,10 @@ jobs:
           distribution: "temurin"
           java-version: "17"
       - name: Log JDK Setup
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           sentry-cli send-event -m "JDK 17 setup completed" -l info
 
       - name: Setup SSH
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
@@ -82,21 +63,11 @@ jobs:
           sentry-cli send-event -m "SSH setup completed" -l info
 
       - name: Recreate variables.env
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           echo "${{ secrets.BACKEND_ENV_FILE }}" > variables.env
           sentry-cli send-event -m "variables.env recreated" -l info
 
       - name: Delete old files
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f /home/${{ secrets.SSH_USER }}/*.yml /home/${{ secrets.SSH_USER }}/*.env
@@ -106,11 +77,6 @@ jobs:
           sentry-cli send-event -m "Old files deleted on test server" -l info
 
       - name: Copy all files to VM
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           scp -o StrictHostKeyChecking=no k8s-backend/mysql-data-persistentvolumeclaim.yaml k8s-backend/mysql-deployment.yaml k8s-backend/mysql-service.yaml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/mysql || (sentry-cli send-event -m "Failed to copy MySQL files" -l error && exit 1)
           scp -o StrictHostKeyChecking=no monitoring/prometheus.yml monitoring/prometheus-rbac.yml docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }} || (sentry-cli send-event -m "Failed to copy backend files" -l error && exit 1)
@@ -119,11 +85,6 @@ jobs:
           sentry-cli send-event -m "All files copied to test server" -l info
 
       - name: Delete all current Kubernetes pods
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service category-service donations-service follows-service nginx-tcp nginx srs srs-tcp srs-udp service-registry streaming-service user-service -n default --ignore-not-found
@@ -132,11 +93,6 @@ jobs:
           sentry-cli send-event -m "Kubernetes pods deleted" -l info
 
       - name: Convert and apply Kubernetes manifests
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
             set -e
@@ -168,20 +124,10 @@ jobs:
           sentry-cli send-event -m "Kubernetes manifests applied successfully" -l info
 
       - name: Notify Deployment Success
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           sentry-cli send-event -m "Deployment to test server completed successfully" -l info
 
       - name: Cleanup SSH keys
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: pibbletv
-          SENTRY_PROJECT: api-gateway
-          SENTRY_ENVIRONMENT: test
         run: |
           rm -rf ~/.ssh
           sentry-cli send-event -m "SSH keys cleaned up" -l info

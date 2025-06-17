@@ -26,14 +26,6 @@ services:
       timeout: 10s
       retries: 5
       start_period: 60s
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"  # 500m
-          memory: "512M"
-        reservations:
-          cpus: "0.1"  # 100m
-          memory: "128M"
     networks:
       - backend
 
@@ -47,14 +39,6 @@ services:
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"  # 500m
-          memory: "512M"
-        reservations:
-          cpus: "0.1"  # 100m
-          memory: "128M"
     networks:
       - backend
 
@@ -68,14 +52,6 @@ services:
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
-    deploy:
-      resources:
-        limits:
-          cpus: "0.4"  # 400m
-          memory: "512M"
-        reservations:
-          cpus: "0.1"  # 100m
-          memory: "128M"
     networks:
       - backend
 
@@ -89,14 +65,6 @@ services:
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"  # 1000m
-          memory: "1024M"
-        reservations:
-          cpus: "0.2"  # 200m
-          memory: "256M"
     networks:
       - backend
 
@@ -111,14 +79,6 @@ services:
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
-    deploy:
-      resources:
-        limits:
-          cpus: "0.4"  # 400m
-          memory: "512M"
-        reservations:
-          cpus: "0.1"  # 100m
-          memory: "128M"
     networks:
       - backend
 
@@ -132,14 +92,6 @@ services:
       SPRING_R2DBC_USERNAME: ${DB_USER}
       SPRING_R2DBC_PASSWORD: ${DB_PASSWORD}
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus
-    deploy:
-      resources:
-        limits:
-          cpus: "0.2"  # 200m
-          memory: "256M"
-        reservations:
-          cpus: "0.05"  # 50m
-          memory: "64M"
     networks:
       - backend
 

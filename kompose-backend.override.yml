@@ -3,6 +3,14 @@ services:
   api-gateway:
     ports:
       - "8078:8078"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"  # 500m
+          memory: "512M"
+        reservations:
+          cpus: "0.1"  # 100m
+          memory: "128M"
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
@@ -14,6 +22,14 @@ services:
   category-service:
     ports:
       - "8082:8082"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.4"  # 400m
+          memory: "512M"
+        reservations:
+          cpus: "0.1"  # 100m
+          memory: "128M"
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
@@ -24,6 +40,14 @@ services:
   user-service:
     ports:
       - "8081:8081"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"  # 500m
+          memory: "512M"
+        reservations:
+          cpus: "0.1"  # 100m
+          memory: "128M"
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
@@ -34,6 +58,14 @@ services:
   donations-service:
     ports:
       - "8084:8084"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.4"  # 400m
+          memory: "512M"
+        reservations:
+          cpus: "0.1"  # 100m
+          memory: "128M"
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
@@ -44,6 +76,14 @@ services:
   streaming-service:
     ports:
       - "8085:8085"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"  # 1000m
+          memory: "1024M"
+        reservations:
+          cpus: "0.2"  # 200m
+          memory: "256M"
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"
@@ -54,6 +94,14 @@ services:
   follows-service:
     ports:
       - "8083:8083"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.2"  # 200m
+          memory: "256M"
+        reservations:
+          cpus: "0.05"  # 50m
+          memory: "64M"
     labels:
       kompose.service.type: "ClusterIP"
       kompose.image-pull-secret: "ghcr-credentials"

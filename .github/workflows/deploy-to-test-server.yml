@@ -117,8 +117,7 @@ jobs:
 
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-api.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-api.yml" -l error; exit 1; }
             echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-auth.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-auth.yml" -l error; exit 1; }
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-nginx.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-nginx.yml" -l error; exit 1; }
-
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-nginx.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-nginx.yml" -l error; exit 1; }      
             exit 0
           EOF
           sentry-cli send-event -m "Kubernetes manifests applied successfully" -l info

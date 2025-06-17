@@ -71,6 +71,15 @@ jobs:
       - name: Build Docker image
         run: docker build -f Dockerfile -t ghcr.io/pibbletv/pibbletv-gateway:latest .
 
+      - name: Scan Docker image using Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ghcr.io/pibbletv/pibbletv-gateway:latest
+          format: table
+          exit-code: 1
+          severity: HIGH,CRITICAL
+          scanners: vuln,config,secret
+
       - name: Push Docker image
         run: docker push ghcr.io/pibbletv/pibbletv-gateway:latest
 

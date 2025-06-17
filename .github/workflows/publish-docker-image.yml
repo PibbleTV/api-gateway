@@ -82,7 +82,7 @@ jobs:
       - name: Sign Docker image
         run: |
           printf '%s\n' "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
-          cosign sign --key cosign.key --upload-tlog=true ghcr.io/pibbletv/pibbletv-gateway:latest
+          cosign sign --key cosign.key ghcr.io/pibbletv/pibbletv-gateway:latest
           rm -f cosign.key
         env:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}

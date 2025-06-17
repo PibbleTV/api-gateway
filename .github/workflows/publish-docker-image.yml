@@ -34,7 +34,7 @@ jobs:
       - name: Generate SBOM
         run: |
           curl -sSL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
-          syft scan dir: . -o cyclonedx-json > sbom.json
+          syft . -o cyclonedx-json > sbom.json
 
       - name: Scan SBOM for vulnerabilities
         run: |

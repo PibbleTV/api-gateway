@@ -16,14 +16,16 @@ jobs:
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
     permissions:
       contents: read
-      packages: read
+      packages: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Install Sentry CLI
-        run: curl -sL https://sentry.io/get-cli/ | bash
+        run: |
+          curl -sSL https://github.com/getsentry/sentry-cli/releases/download/2.46.0/sentry-cli-Linux-x86_64 -o /usr/local/bin/sentry-cli
+          chmod +x /usr/local/bin/sentry-cli
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -35,7 +37,9 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Build Spring Boot application
-        run: ./gradlew clean build --stacktrace
+        run: |
+          ./gradlew clean build --stacktrace
+          chmod +x build/tmp/sentry-cli* || true # Set permissions after build
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 

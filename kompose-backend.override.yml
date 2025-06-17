@@ -1,19 +1,15 @@
 version: "3.8"
 services:
-#  api-gateway:
-#    ports:
-#      - "8078:8078"
-#    labels:
-#      kompose.service.type: "ClusterIP"
-#      kompose.image-pull-secret: "ghcr-credentials"
-#      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-#      prometheus.io/scrape: "true"
-#      prometheus.io/port: "8078"
-#      prometheus.io/path: "/actuator/prometheus"
-#      kompose.service.resource.requests.cpu: "100m"
-#      kompose.service.resource.requests.memory: "128Mi"
-#      kompose.service.resource.limits.cpu: "500m"
-#      kompose.service.resource.limits.memory: "512Mi"
+  api-gateway:
+    ports:
+      - "8078:8078"
+    labels:
+      kompose.service.type: "ClusterIP"
+      kompose.image-pull-secret: "ghcr-credentials"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "8078"
+      prometheus.io/path: "/actuator/prometheus"
 
   category-service:
     ports:
@@ -24,10 +20,6 @@ services:
       prometheus.io/scrape: "true"
       prometheus.io/port: "8082"
       prometheus.io/path: "/actuator/prometheus"
-      kompose.service.resource.requests.cpu: "100m"
-      kompose.service.resource.requests.memory: "128Mi"
-      kompose.service.resource.limits.cpu: "400m"
-      kompose.service.resource.limits.memory: "512Mi"
 
   user-service:
     ports:
@@ -38,10 +30,6 @@ services:
       prometheus.io/scrape: "true"
       prometheus.io/port: "8081"
       prometheus.io/path: "/actuator/prometheus"
-      kompose.service.resource.requests.cpu: "100m"
-      kompose.service.resource.requests.memory: "128Mi"
-      kompose.service.resource.limits.cpu: "500m"
-      kompose.service.resource.limits.memory: "512Mi"
 
   donations-service:
     ports:
@@ -52,10 +40,6 @@ services:
       prometheus.io/scrape: "true"
       prometheus.io/port: "8084"
       prometheus.io/path: "/actuator/prometheus"
-      kompose.service.resource.requests.cpu: "100m"
-      kompose.service.resource.requests.memory: "128Mi"
-      kompose.service.resource.limits.cpu: "400m"
-      kompose.service.resource.limits.memory: "512Mi"
 
   streaming-service:
     ports:
@@ -66,10 +50,6 @@ services:
       prometheus.io/scrape: "true"
       prometheus.io/port: "8085"
       prometheus.io/path: "/actuator/prometheus"
-      kompose.service.resource.requests.cpu: "200m"
-      kompose.service.resource.requests.memory: "256Mi"
-      kompose.service.resource.limits.cpu: "1000m"
-      kompose.service.resource.limits.memory: "1024Mi"
 
   follows-service:
     ports:
@@ -80,10 +60,6 @@ services:
       prometheus.io/scrape: "true"
       prometheus.io/port: "8083"
       prometheus.io/path: "/actuator/prometheus"
-      kompose.service.resource.requests.cpu: "50m"
-      kompose.service.resource.requests.memory: "64Mi"
-      kompose.service.resource.limits.cpu: "200m"
-      kompose.service.resource.limits.memory: "256Mi"
 
 #  service-registry:
 #    ports:

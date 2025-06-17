@@ -87,7 +87,7 @@ jobs:
       - name: Delete all current Kubernetes pods
         run: |
           ssh ${{ secrets.SSH_USER }}@100.121.76.9 << EOF
-            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service category-service donations-service follows-service nginx-tcp nginx srs srs-tcp srs-udp service-registry streaming-service user-service -n default --ignore-not-found
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service api-gateway category-service donations-service follows-service nginx-tcp nginx srs srs-tcp srs-udp service-registry streaming-service user-service -n default --ignore-not-found
             exit $?
           EOF
           sentry-cli send-event -m "Kubernetes pods deleted" -l info

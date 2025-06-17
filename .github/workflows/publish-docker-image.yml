@@ -49,10 +49,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GH_TOKEN }}
 
-      - name: Build Docker image
-        run: |
-          docker build -f Dockerfile -t ghcr.io/pibbletv/pibbletv-gateway:latest .
-
       - name: Generate Docker image hash
         run: |
           docker image inspect ghcr.io/pibbletv/pibbletv-gateway:latest | jq -r '.[0].Id' | sha256sum > artifact_hashes.txt
@@ -61,6 +57,12 @@ jobs:
         run: |
           curl -sSL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign
           chmod +x /usr/local/bin/cosign
+
+      - name: Build Docker image
+        run: docker build -f Dockerfile -t ghcr.io/pibbletv/pibbletv-gateway:latest .
+
+      - name: Push Docker image
+        run: docker push ghcr.io/pibbletv/pibbletv-gateway:latest
 
       - name: Sign Docker image
         run: |
@@ -73,10 +75,6 @@ jobs:
           printf '%s\n' "${{ secrets.COSIGN_PUBLIC_KEY }}" > cosign.pub
           cosign verify --key cosign.pub ghcr.io/pibbletv/pibbletv-gateway:latest
           rm -f cosign.pub
-
-      - name: Push Docker image to GHCR
-        run: |
-          docker push ghcr.io/pibbletv/pibbletv-gateway:latest
 
       - name: Test pulling image from GHCR
         run: |

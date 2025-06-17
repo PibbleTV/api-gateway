@@ -80,7 +80,6 @@ jobs:
         run: |
           scp -o StrictHostKeyChecking=no k8s-backend/mysql-data-persistentvolumeclaim.yaml k8s-backend/mysql-deployment.yaml k8s-backend/mysql-service.yaml ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/mysql || (sentry-cli send-event -m "Failed to copy MySQL files" -l error && exit 1)
           scp -o StrictHostKeyChecking=no \
-          k8s-backend/api-gateway-claim0-persistentvolumeclaim.yaml \
           k8s-backend/api-gateway-deployment.yaml \
           k8s-backend/api-gateway-service.yaml \
           k8s-backend/category-service-deployment.yaml \

@@ -53,7 +53,7 @@ sentry {
     includeSourceContext = true
     org = "pibbletv"
     projectName = "api-gateway"
-    authToken = "token ;)"
+    authToken = "token;)"
     autoInstallation.enabled = false
     // New secret because I accidentally leaked the old one :(
 }

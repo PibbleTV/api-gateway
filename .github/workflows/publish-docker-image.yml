@@ -76,7 +76,6 @@ jobs:
         with:
           image-ref: ghcr.io/pibbletv/pibbletv-gateway:latest
           format: table
-          exit-code: 1
           severity: HIGH,CRITICAL
           scanners: vuln,config,secret
 

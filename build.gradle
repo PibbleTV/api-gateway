@@ -53,7 +53,7 @@ sentry {
     includeSourceContext = true
     org = "pibbletv"
     projectName = "api-gateway"
-    authToken = System.getenv('SENTRY_AUTH_TOKEN')
+    authToken = "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"
     autoInstallation.enabled = false
 }
 

@@ -39,6 +39,7 @@ jobs:
       - name: Scan SBOM for vulnerabilities
         run: |
           curl -sSL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          curl -sSL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
           grype sbom:./sbom.json
 
       - name: Log in to GitHub Container Registry (GHCR)

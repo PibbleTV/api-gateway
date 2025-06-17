@@ -27,6 +27,20 @@ jobs:
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
+      - name: Generate artifact hash
+        run: |
+          sha256sum build/libs/*.jar > artifact_hashes.txt
+
+      - name: Generate SBOM
+        run: |
+          curl -sSL https://raw.githubusercontent.com/anchor/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          syft packages dir: . -o cyclonedx-json > sbom.json
+
+      - name: Scan SBOM for vulnerabilities
+        run: |
+          curl -sSL https://raw.githubusercontent.com/anchor/grype/main/install.sh | sh -s -- -b /usr/local/bin
+          grype sbom:./sbom.json
+
       - name: Log in to GitHub Container Registry (GHCR)
         uses: docker/login-action@v2
         with:
@@ -37,6 +51,27 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -f Dockerfile -t ghcr.io/pibbletv/pibbletv-gateway:latest .
+
+      - name: Generate Docker image hash
+        run: |
+          docker image inspect ghcr.io/pibbletv/pibbletv-gateway:latest | jq -r '.[0].Id' | sha256sum > artifact_hashes.txt
+
+      - name: Install Cosign
+        run: |
+          curl -sSL https://github.com/sigstore/cosign/releases/latest/download/cosign-linux-amd64 -o /usr/local/bin/cosign
+          chmod +x /usr/local/bin/cosign
+
+      - name: Sign Docker image
+        run: |
+          echo "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
+          cosign sign --key cosign.key ghcr.io/pibbletv/pibbletv-gateway:latest
+        env:
+          COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}
+
+      - name: Verify image signature
+        run: |
+          echo "${{ secrets.COSIGN_PUBLIC_KEY }}" > cosign.pub
+          cosign verify --key cosign.pub ghcr.io/pibbletv/pibbletv-gateway:latest
 
       - name: Push Docker image to GHCR
         run: |

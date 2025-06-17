@@ -1,12 +1,12 @@
 version: "3.8"
 services:
-#  api-gateway:
-#    ports:
-#      - "8078:8078"
-#    labels:
-#      kompose.service.type: "ClusterIP"
-#      kompose.image-pull-secret: "ghcr-credentials"
-#      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+  api-gateway:
+    ports:
+      - "8078:8078"
+    labels:
+      kompose.service.type: "ClusterIP"
+      kompose.image-pull-secret: "ghcr-credentials"
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 
 
   category-service:

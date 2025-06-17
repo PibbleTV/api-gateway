@@ -54,6 +54,7 @@ sentry {
     org = "pibbletv"
     projectName = "api-gateway"
     authToken = System.getenv('SENTRY_AUTH_TOKEN')
+    autoInstallation.enabled = false
     // New secret because I accidentally leaked the old one :(
 }
 

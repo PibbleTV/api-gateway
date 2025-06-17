@@ -8,24 +8,22 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: pibbletv
-      SENTRY_PROJECT: api-gateway
-      SENTRY_ENVIRONMENT: test
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
-    permissions:
-      contents: read
-      packages: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install Sentry CLI
         run: |
           curl -sSL https://github.com/getsentry/sentry-cli/releases/download/2.46.0/sentry-cli-Linux-x86_64 -o /usr/local/bin/sentry-cli
           chmod +x /usr/local/bin/sentry-cli
+          /usr/local/bin/sentry-cli --version  # Verify installation
 
       - name: Set up JDK
         uses: actions/setup-java@v3
@@ -38,10 +36,15 @@ jobs:
 
       - name: Build Spring Boot application
         run: |
-          ./gradlew clean build --stacktrace
-          chmod +x build/tmp/sentry-cli* || true # Set permissions after build
+          # Ensure permissions for any sentry-cli binaries in build/tmp
+          chmod +x build/tmp/sentry-cli* || echo "No sentry-cli files found in build/tmp"
+          ./gradlew clean build --info --stacktrace
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: pibbletv
+          SENTRY_PROJECT: api-gateway
+          SENTRY_ENVIRONMENT: test
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
       - name: Install Syft and Grype
         run: |
@@ -79,7 +82,7 @@ jobs:
       - name: Sign Docker image
         run: |
           printf '%s\n' "${{ secrets.COSIGN_PRIVATE_KEY }}" > cosign.key
-          cosign sign --key cosign.key --upload-tlog=true --verbose ${{ env.IMAGE_DIGEST }} 2>&1 | tee sign.log
+          cosign sign --key cosign.key --upload-tlog=true ghcr.io/pibbletv/pibbletv-gateway:latest
           rm -f cosign.key
         env:
           COSIGN_PASSWORD: ${{ secrets.COSIGN_PASSWORD }}

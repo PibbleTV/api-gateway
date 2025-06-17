@@ -8,10 +8,22 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: pibbletv
+      SENTRY_PROJECT: api-gateway
+      SENTRY_ENVIRONMENT: test
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+    permissions:
+      contents: read
+      packages: read
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Install Sentry CLI
+        run: curl -sL https://sentry.io/get-cli/ | bash
 
       - name: Set up JDK
         uses: actions/setup-java@v3

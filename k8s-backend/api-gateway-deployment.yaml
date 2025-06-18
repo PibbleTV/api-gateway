@@ -13,6 +13,7 @@ metadata:
   labels:
     io.kompose.service: api-gateway
   name: api-gateway
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -50,12 +51,12 @@ spec:
               value: external
             - name: SERVER_PORT
               value: "8078"
-            - name: SERVER_SSL_CERTIFICATE
-              value: file:/opt/keycloak/certs/pibbletv.crt
-            - name: SERVER_SSL_CERTIFICATE_PRIVATE_KEY
-              value: file:/opt/keycloak/certs/pibbletv.key
             - name: SERVER_SSL_ENABLED
               value: "true"
+            - name: SERVER_SSL_CERTIFICATE
+              value: file:/opt/keycloak/certs/tls.crt  # Updated to Secret's default file name
+            - name: SERVER_SSL_CERTIFICATE_PRIVATE_KEY
+              value: file:/opt/keycloak/certs/tls.key  # Updated to Secret's default file name
             - name: SPRING_APPLICATION_NAME
               value: api-gateway
             - name: SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI
@@ -85,11 +86,12 @@ spec:
               memory: "128Mi"
           volumeMounts:
             - mountPath: /opt/keycloak/certs
-              name: api-gateway-claim0
+              name: certs
+              readOnly: true
       imagePullSecrets:
         - name: ghcr-credentials
       restartPolicy: Always
       volumes:
-        - name: api-gateway-claim0
-          persistentVolumeClaim:
-            claimName: api-gateway-claim0
+        - name: certs
+          secret:
+            secretName: pibbletv-tls-api

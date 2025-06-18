@@ -29,9 +29,6 @@ spec:
         kompose.service.type: ClusterIP
         kompose.version: 1.35.0 (9532ceef3)
         nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-        prometheus.io/path: /actuator/prometheus
-        prometheus.io/port: "8078"
-        prometheus.io/scrape: "true"
       labels:
         io.kompose.service: api-gateway
     spec:

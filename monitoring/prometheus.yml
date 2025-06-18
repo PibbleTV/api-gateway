@@ -36,22 +36,46 @@ data:
           - source_labels: [__meta_kubernetes_service_name]
             action: replace
             target_label: job
-            
-      - job_name: 'kubernetes-pods'
+    
+    
+      - job_name: 'metrics-server'
         kubernetes_sd_configs:
-          - role: pod
+          - role: service
             namespaces:
               names:
-                - default
+                - kube-system
         relabel_configs:
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          - source_labels: [__meta_kubernetes_service_name]
             action: keep
-            regex: true
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            regex: metrics-server
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
             action: replace
             target_label: __metrics_path__
             regex: (.+)
-          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            default: /metrics
+          - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+            action: replace
+            regex: (.+):(?:\d+);(\d+)
+            replacement: $1:$2
+            target_label: __address__
+
+
+      - job_name: 'kube-state-metrics'
+        kubernetes_sd_configs:
+          - role: service
+            namespaces:
+              names:
+                - kube-system
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_name]
+            action: keep
+            regex: kube-state-metrics
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+            default: /metrics
+          - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
             action: replace
             regex: (.+):(?:\d+);(\d+)
             replacement: $1:$2

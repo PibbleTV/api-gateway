@@ -64,14 +64,21 @@ jobs:
 
       - name: Copy and setup certificates on test server
         run: |
-          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << 'EOF'
+
+          echo "${{ secrets.TLS_CERT }}" > pibbletv.crt
+          echo "${{ secrets.TLS_KEY }}" > pibbletv.key
+          
+
+          ssh ${{ secrets.SSH_USER }}@10.110.0.3 << 'EOF'
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S mkdir -p /home/${{ secrets.SSH_USER }}/certs
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S chmod 755 /home/${{ secrets.SSH_USER }}/certs
           EOF
-          echo "${{ secrets.TLS_CERT }}" > pibbletv.crt
-          echo "${{ secrets.TLS_KEY }}" > pibbletv.key
-          scp -o StrictHostKeyChecking=no pibbletv.crt pibbletv.key ${{ secrets.SSH_USER }}@100.121.76.9:/home/${{ secrets.SSH_USER }}/certs/ || (sentry-cli send-event -m "Failed to copy certificate files" -l error && exit 1)
-          ssh ${{ secrets.SSH_USER }}@100.121.76.9 << 'EOF'
+          
+
+          scp -o StrictHostKeyChecking=no pibbletv.crt pibbletv.key ${{ secrets.SSH_USER }}@10.110.0.3:/home/${{ secrets.SSH_USER }}/certs/ || (sentry-cli send-event -m "Failed to copy certificate files" -l error && exit 1)
+          
+
+          ssh ${{ secrets.SSH_USER }}@10.110.0.3 << 'EOF'
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S chown ${{ secrets.SSH_USER }}:${{ secrets.SSH_USER }} /home/${{ secrets.SSH_USER }}/certs/*
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S chmod 644 /home/${{ secrets.SSH_USER }}/certs/pibbletv.crt
             echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S chmod 600 /home/${{ secrets.SSH_USER }}/certs/pibbletv.key

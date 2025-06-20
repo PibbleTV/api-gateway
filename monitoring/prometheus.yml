@@ -52,7 +52,6 @@ data:
             action: replace
             target_label: __metrics_path__
             regex: (.+)
-            default: /metrics
           - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
             action: replace
             regex: (.+):(?:\d+);(\d+)
@@ -74,7 +73,6 @@ data:
             action: replace
             target_label: __metrics_path__
             regex: (.+)
-            default: /metrics
           - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
             action: replace
             regex: (.+):(?:\d+);(\d+)

@@ -26,7 +26,7 @@ ext {
 
 dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
-    implementation 'io.sentry:sentry-spring-boot-starter:8.12.0'
+    implementation 'io.sentry:sentry-spring-boot-starter:8.14.0'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.projectlombok:lombok:1.18.38'

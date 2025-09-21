@@ -146,8 +146,5 @@ GatewayConfig.java
 # Queries for easy access #
 queries.txt
 
-# Gradle
-build.gradle
-
 #SecurityConfig
 src/main/java/com/pibbletv/api_gateway/SecurityConfig.java

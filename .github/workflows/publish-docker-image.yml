@@ -1,0 +1,91 @@
+name: Publish Docker image
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install Sentry CLI
+        run: |
+          curl -sSL https://github.com/getsentry/sentry-cli/releases/download/2.46.0/sentry-cli-Linux-x86_64 -o /usr/local/bin/sentry-cli
+          chmod +x /usr/local/bin/sentry-cli
+          /usr/local/bin/sentry-cli --version  # Verify installation
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Grant execute permission for Gradle
+        run: chmod +x ./gradlew
+
+      - name: Build Spring Boot application
+        run: |
+          # Ensure permissions for any sentry-cli binaries in build/tmp
+          chmod +x build/tmp/sentry-cli* || echo "No sentry-cli files found in build/tmp"
+          ./gradlew clean build --info --stacktrace
+        env:
+          SENTRY_ORG: pibbletv
+          SENTRY_PROJECT: api-gateway
+          SENTRY_ENVIRONMENT: test
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+
+      - name: Install Syft and Grype
+        run: |
+          curl -sSL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+          curl -sSL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Generate SBOM
+        run: syft . -o cyclonedx-json > sbom.json
+
+      - name: Scan SBOM for vulnerabilities
+        run: grype sbom:./sbom.json
+
+      - name: Log in to GitHub Container Registry (GHCR)
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GH_TOKEN }}
+
+      - name: Generate Docker image hash
+        run: |
+          docker image inspect ghcr.io/pibbletv/pibbletv-gateway:latest | jq -r '.[0].Id' | sha256sum > artifact_hashes.txt
+
+      - name: Build Docker image
+        run: docker build -f Dockerfile -t ghcr.io/pibbletv/pibbletv-gateway:latest .
+
+      - name: Scan Docker image using Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ghcr.io/pibbletv/pibbletv-gateway:latest
+          format: table
+          severity: HIGH,CRITICAL
+          scanners: vuln,config,secret
+
+      - name: Push Docker image
+        run: docker push ghcr.io/pibbletv/pibbletv-gateway:latest
+
+      - name: Test pulling image from GHCR
+        run: |
+          docker pull ghcr.io/pibbletv/pibbletv-gateway:latest
+
+      - name: Initialize release pipeline
+        run: gh workflow run "deploy-to-test-server.yml" --repo PibbleTV/api-gateway --json
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}

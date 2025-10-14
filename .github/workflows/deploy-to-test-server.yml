@@ -1,0 +1,144 @@
+name: Deploy to test server
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    name: Deploy docker-compose to test server
+    runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: pibbletv
+      SENTRY_PROJECT: api-gateway
+      SENTRY_ENVIRONMENT: test
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Sentry CLI
+        run: curl -sL https://sentry.io/get-cli/ | bash
+
+      - name: Run Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+      - name: Log Tailscale Connection
+        run: |
+          sentry-cli send-event -m "Tailscale connection initiated" -l info
+
+      - name: Run Checkout Backend Repo
+        uses: actions/checkout@v3
+      - name: Log Backend Repo Checkout
+        run: |
+          sentry-cli send-event -m "Backend repo checked out" -l info
+
+      - name: Run Checkout Frontend Repo
+        uses: actions/checkout@v3
+        with:
+          repository: PibbleTV/react-app
+          token: ${{ secrets.GH_TOKEN }}
+          path: frontend
+      - name: Log Frontend Repo Checkout
+        run: |
+          sentry-cli send-event -m "Frontend repo checked out" -l info
+
+      - name: Run Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: Log JDK Setup
+        run: |
+          sentry-cli send-event -m "JDK 17 setup completed" -l info
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          install -m 600 -D /dev/null ~/.ssh/id_rsa
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -T 20 -H ${{ secrets.HOST_ADDRESS }} >> ~/.ssh/known_hosts || (sentry-cli send-event -m "SSH keyscan failed" -l error && exit 1)
+          sentry-cli send-event -m "SSH setup completed" -l info
+
+      - name: Recreate variables.env
+        run: |
+          echo "${{ secrets.BACKEND_ENV_FILE }}" > variables.env
+          sentry-cli send-event -m "variables.env recreated" -l info
+
+      - name: Delete old files
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} << EOF
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f /home/${{ secrets.SSH_USER }}/*.yml /home/${{ secrets.SSH_USER }}/*.env
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -rf /home/${{ secrets.SSH_USER }}/k8s-backend/* /home/${{ secrets.SSH_USER }}/frontend/* /home/${{ secrets.SSH_USER }}/misc/*
+            exit $?
+          EOF
+          sentry-cli send-event -m "Old files deleted on test server" -l info
+
+      - name: Copy all files to VM
+        run: |
+          scp -o StrictHostKeyChecking=no k8s-backend/mysql-data-persistentvolumeclaim.yaml k8s-backend/mysql-deployment.yaml k8s-backend/mysql-service.yaml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:/home/${{ secrets.SSH_USER }}/mysql || (sentry-cli send-event -m "Failed to copy MySQL files" -l error && exit 1)
+          scp -o StrictHostKeyChecking=no \
+          k8s-backend/api-gateway-deployment.yaml \
+          k8s-backend/api-gateway-service.yaml \
+          k8s-backend/category-service-deployment.yaml \
+          k8s-backend/category-service-service.yaml \
+          k8s-backend/donations-service-deployment.yaml \
+          k8s-backend/donations-service-service.yaml \
+          k8s-backend/follows-service-deployment.yaml \
+          k8s-backend/follows-service-service.yaml \
+          k8s-backend/streaming-service-deployment.yaml \
+          k8s-backend/streaming-service-service.yaml \
+          k8s-backend/user-service-deployment.yaml \
+          k8s-backend/user-service-service.yaml \
+          ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:/home/${{ secrets.SSH_USER }}/k8s-backend/ || \
+          (sentry-cli send-event -m "Failed to copy frontend files" -l error && exit 1)
+          scp -o StrictHostKeyChecking=no monitoring/prometheus.yml monitoring/prometheus-rbac.yml docker-compose-backend.yml kompose-backend.override.yml variables.env ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:/home/${{ secrets.SSH_USER }} || (sentry-cli send-event -m "Failed to copy backend files" -l error && exit 1)
+          scp -o StrictHostKeyChecking=no frontend/k8s-frontend/srs-udp-service.yaml frontend/k8s-frontend/srs-tcp-service.yaml frontend/k8s-frontend/srs-deployment.yaml frontend/k8s-frontend/nginx-service.yaml frontend/k8s-frontend/nginx-deployment.yaml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:/home/${{ secrets.SSH_USER }}/frontend || (sentry-cli send-event -m "Failed to copy frontend files" -l error && exit 1)
+          scp -o StrictHostKeyChecking=no frontend/ingress-auth.yml frontend/ingress-nginx.yml frontend/ingress-api.yml frontend/volumes/nfs-service.yml frontend/volumes/nfs-server-pod.yml frontend/volumes/nfs-pvc.yml frontend/volumes/nfs-pv.yml frontend/volumes/hls-data-pvc.yml ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }}:/home/${{ secrets.SSH_USER }}/misc || (sentry-cli send-event -m "Failed to copy misc files" -l error && exit 1)
+          sentry-cli send-event -m "All files copied to test server" -l info
+
+      - name: Delete all current Kubernetes pods
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} << EOF
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod,deployment,service category-service donations-service follows-service nginx-tcp nginx srs srs-tcp srs-udp service-registry streaming-service user-service -n default --ignore-not-found
+            exit $?
+          EOF
+          sentry-cli send-event -m "Kubernetes pods deleted" -l info
+
+      - name: Convert and apply Kubernetes manifests
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.HOST_ADDRESS }} << 'EOF'
+            set -e
+            cd /home/${{ secrets.SSH_USER }}
+
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GH_TOKEN }}
+
+            export $(grep -v '^#' variables.env | xargs)
+            export SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} # Pass Sentry token
+
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/prometheus-rbac.yml || { sentry-cli send-event -m "Failed to apply prometheus-rbac.yml" -l error; exit 1; }
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/prometheus.yml || { sentry-cli send-event -m "Failed to apply prometheus.yml" -l error; exit 1; }
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl delete pod -n monitoring -l app=prometheus-server --ignore-not-found || { sentry-cli send-event -m "Failed to delete Prometheus pod" -l error; exit 1; }
+
+            echo "${{ secrets.SUDO_PASSWORD }}" | sudo -S rm -f k8s-frontend/*-persistentvolumeclaim.yaml || { sentry-cli send-event -m "Failed to delete frontend PVCs" -l error; exit 1; }
+
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/frontend -n default || { sentry-cli send-event -m "Failed to apply frontend manifests" -l error; exit 1; }
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/mysql -n default || { sentry-cli send-event -m "Failed to apply MySQL manifests" -l error; exit 1; }
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f k8s-backend/ -n default || { sentry-cli send-event -m "Failed to apply backend manifests" -l error; exit 1; }
+
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-api.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-api.yml" -l error; exit 1; }
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-auth.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-auth.yml" -l error; exit 1; }
+            echo "${{ secrets.SUDO_PASSWORD }}" | kubectl apply -f /home/${{ secrets.SSH_USER }}/misc/ingress-nginx.yml -n default || { sentry-cli send-event -m "Failed to apply ingress-nginx.yml" -l error; exit 1; }
+          EOF
+          sentry-cli send-event -m "Kubernetes manifests applied successfully" -l info
+
+      - name: Notify Deployment Success
+        run: |
+          sentry-cli send-event -m "Deployment to test server completed successfully" -l info
+
+      - name: Cleanup SSH keys
+        run: |
+          rm -rf ~/.ssh
+          sentry-cli send-event -m "SSH keys cleaned up" -l info
